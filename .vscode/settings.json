@@ -1,3 +1,11 @@
 {
-  "dart.flutterSdkPath": ".fvm/versions/3.32.4"
+  "dart.flutterSdkPath": ".fvm/versions/3.32.4",
+  "files.readonlyInclude": {
+    ".flutter-plugins-dependencies": true,
+    ".metadata": true,
+    "pubspec.lock": true,
+    "build/**/*": true,
+    ".fvm/**/*": true,
+    ".dart_tool/**/*": true
+  }
 }
