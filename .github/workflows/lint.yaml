@@ -1,0 +1,45 @@
+name: Flutter CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  code-quality:
+    name: Code Quality Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.4'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: 🔍 Run static analysis
+        run: |
+          echo "Running static analysis..."
+          if ! flutter analyze --fatal-warnings; then
+            echo "❌ Static analysis failed."
+            echo "Please fix the analyzer warnings and errors."
+            exit 1
+          else
+            echo "✅ Static analysis passed."
+          fi
+
+      - name: ✅ All checks passed
+        run: |
+          echo "🎉 All code quality checks passed!"
+          echo "Your code is ready for merge."
