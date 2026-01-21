@@ -1,9 +1,9 @@
-#include "Generated.xcconfig"
+﻿#include "Generated.xcconfig"
 #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug-production.xcconfig"
 #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release-production.xcconfig"
 #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.profile-production.xcconfig"
 
 // Production flavor configuration
-PRODUCT_BUNDLE_IDENTIFIER = com.stormx.base
-PRODUCT_NAME = Base
+PRODUCT_BUNDLE_IDENTIFIER = com.sharexe.app
+PRODUCT_NAME = ShareXe
 FLUTTER_TARGET = lib/main_production.dart
