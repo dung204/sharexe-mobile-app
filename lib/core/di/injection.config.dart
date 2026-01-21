@@ -53,20 +53,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(
       () => networkModule.dio(gh<_i1028.AliceService>()),
     );
-    gh.singleton<_i610.ThemeService>(
-      () => _i610.ThemeService(gh<_i460.SharedPreferences>()),
-    );
     gh.singleton<_i242.LanguageService>(
       () => _i242.LanguageService(gh<_i460.SharedPreferences>()),
     );
-    gh.factory<_i1028.UserLocalDataSource>(
-      () => _i1028.UserLocalDataSource(gh<_i460.SharedPreferences>()),
+    gh.singleton<_i610.ThemeService>(
+      () => _i610.ThemeService(gh<_i460.SharedPreferences>()),
     );
     gh.factory<_i907.LocalDataSource>(
       () => _i907.LocalDataSource(gh<_i460.SharedPreferences>()),
     );
-    gh.factory<_i8.UserApiService>(() => _i8.UserApiService(gh<_i361.Dio>()));
+    gh.factory<_i1028.UserLocalDataSource>(
+      () => _i1028.UserLocalDataSource(gh<_i460.SharedPreferences>()),
+    );
     gh.factory<_i10.TodoApiService>(() => _i10.TodoApiService(gh<_i361.Dio>()));
+    gh.factory<_i8.UserApiService>(() => _i8.UserApiService(gh<_i361.Dio>()));
     gh.singleton<_i818.AppBloc>(
       () => _i818.AppBloc(
         gh<_i242.LanguageService>(),
@@ -86,11 +86,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i712.GetTodosUseCase>(
       () => _i712.GetTodosUseCase(gh<_i1004.TodoRepository>()),
     );
-    gh.factory<_i573.UpdateTodoUseCase>(
-      () => _i573.UpdateTodoUseCase(gh<_i1004.TodoRepository>()),
-    );
     gh.factory<_i927.GetTodoByIdUseCase>(
       () => _i927.GetTodoByIdUseCase(gh<_i1004.TodoRepository>()),
+    );
+    gh.factory<_i573.UpdateTodoUseCase>(
+      () => _i573.UpdateTodoUseCase(gh<_i1004.TodoRepository>()),
     );
     gh.factory<_i832.GetUsersUseCase>(
       () => _i832.GetUsersUseCase(gh<_i1012.UserRepository>()),
