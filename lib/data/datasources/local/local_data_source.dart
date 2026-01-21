@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:base/data/models/user_model.dart';
+import 'package:sharexe/data/models/user_model.dart';
 
 @injectable
 class LocalDataSource {

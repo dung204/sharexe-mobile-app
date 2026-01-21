@@ -1,5 +1,5 @@
-import 'package:base/core/result/result.dart';
-import 'package:base/domain/entities/todo.dart';
+import 'package:sharexe/core/result/result.dart';
+import 'package:sharexe/domain/entities/todo.dart';
 
 abstract class TodoRepository {
   Future<Result<List<Todo>>> getTodos();

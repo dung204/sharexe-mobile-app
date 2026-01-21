@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:base/domain/entities/todo.dart';
+import 'package:sharexe/domain/entities/todo.dart';
 
 part '../../generated/data/models/todo_model.g.dart';
 

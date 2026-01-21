@@ -1,4 +1,4 @@
-import 'package:base/configs/flavor/flavor_config.dart';
+import 'package:sharexe/configs/flavor/flavor_config.dart';
 import 'package:flutter/material.dart';
 
 class EnvironmentInfoWidget extends StatelessWidget {

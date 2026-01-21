@@ -9,32 +9,34 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:base/app/bloc/app_bloc.dart' as _i818;
-import 'package:base/core/network/network_module.dart' as _i899;
-import 'package:base/core/services/alice_service.dart' as _i1028;
-import 'package:base/core/services/connectivity_service.dart' as _i104;
-import 'package:base/core/services/language_service.dart' as _i242;
-import 'package:base/core/services/theme_service.dart' as _i610;
-import 'package:base/data/datasources/local/local_data_source.dart' as _i907;
-import 'package:base/data/datasources/local/user_local_data_source.dart'
-    as _i1028;
-import 'package:base/data/datasources/remote/todo_api_service.dart' as _i10;
-import 'package:base/data/datasources/remote/user_api_service.dart' as _i8;
-import 'package:base/data/repositories/todo_repository_impl.dart' as _i425;
-import 'package:base/data/repositories/user_repository_impl.dart' as _i904;
-import 'package:base/domain/repositories/todo_repository.dart' as _i1004;
-import 'package:base/domain/repositories/user_repository.dart' as _i1012;
-import 'package:base/domain/usecases/get_todo_by_id_usecase.dart' as _i927;
-import 'package:base/domain/usecases/get_todos_usecase.dart' as _i712;
-import 'package:base/domain/usecases/get_user_by_id_usecase.dart' as _i970;
-import 'package:base/domain/usecases/get_users_usecase.dart' as _i832;
-import 'package:base/domain/usecases/update_todo_usecase.dart' as _i573;
-import 'package:base/presentation/modules/todo/cubit/todo_cubit.dart' as _i256;
-import 'package:base/presentation/modules/users/cubit/user_cubit.dart' as _i578;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
+import 'package:sharexe/app/bloc/app_bloc.dart' as _i575;
+import 'package:sharexe/core/network/network_module.dart' as _i214;
+import 'package:sharexe/core/services/alice_service.dart' as _i861;
+import 'package:sharexe/core/services/connectivity_service.dart' as _i697;
+import 'package:sharexe/core/services/language_service.dart' as _i365;
+import 'package:sharexe/core/services/theme_service.dart' as _i323;
+import 'package:sharexe/data/datasources/local/local_data_source.dart' as _i792;
+import 'package:sharexe/data/datasources/local/user_local_data_source.dart'
+    as _i916;
+import 'package:sharexe/data/datasources/remote/todo_api_service.dart' as _i412;
+import 'package:sharexe/data/datasources/remote/user_api_service.dart' as _i652;
+import 'package:sharexe/data/repositories/todo_repository_impl.dart' as _i603;
+import 'package:sharexe/data/repositories/user_repository_impl.dart' as _i238;
+import 'package:sharexe/domain/repositories/todo_repository.dart' as _i589;
+import 'package:sharexe/domain/repositories/user_repository.dart' as _i806;
+import 'package:sharexe/domain/usecases/get_todo_by_id_usecase.dart' as _i302;
+import 'package:sharexe/domain/usecases/get_todos_usecase.dart' as _i1005;
+import 'package:sharexe/domain/usecases/get_user_by_id_usecase.dart' as _i241;
+import 'package:sharexe/domain/usecases/get_users_usecase.dart' as _i875;
+import 'package:sharexe/domain/usecases/update_todo_usecase.dart' as _i379;
+import 'package:sharexe/presentation/modules/todo/cubit/todo_cubit.dart'
+    as _i204;
+import 'package:sharexe/presentation/modules/users/cubit/user_cubit.dart'
+    as _i505;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -44,71 +46,75 @@ extension GetItInjectableX on _i174.GetIt {
   }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final networkModule = _$NetworkModule();
-    gh.factory<_i104.ConnectivityService>(() => _i104.ConnectivityService());
+    gh.factory<_i697.ConnectivityService>(() => _i697.ConnectivityService());
     await gh.singletonAsync<_i460.SharedPreferences>(
       () => networkModule.sharedPreferences,
       preResolve: true,
     );
-    gh.lazySingleton<_i1028.AliceService>(() => _i1028.AliceService());
+    gh.lazySingleton<_i861.AliceService>(() => _i861.AliceService());
+    gh.singleton<_i365.LanguageService>(
+      () => _i365.LanguageService(gh<_i460.SharedPreferences>()),
+    );
+    gh.singleton<_i323.ThemeService>(
+      () => _i323.ThemeService(gh<_i460.SharedPreferences>()),
+    );
+    gh.factory<_i792.LocalDataSource>(
+      () => _i792.LocalDataSource(gh<_i460.SharedPreferences>()),
+    );
+    gh.factory<_i916.UserLocalDataSource>(
+      () => _i916.UserLocalDataSource(gh<_i460.SharedPreferences>()),
+    );
+    gh.singleton<_i575.AppBloc>(
+      () => _i575.AppBloc(
+        gh<_i365.LanguageService>(),
+        gh<_i323.ThemeService>(),
+        gh<_i697.ConnectivityService>(),
+      ),
+    );
     gh.lazySingleton<_i361.Dio>(
-      () => networkModule.dio(gh<_i1028.AliceService>()),
+      () => networkModule.dio(gh<_i861.AliceService>()),
     );
-    gh.singleton<_i242.LanguageService>(
-      () => _i242.LanguageService(gh<_i460.SharedPreferences>()),
+    gh.factory<_i412.TodoApiService>(
+      () => _i412.TodoApiService(gh<_i361.Dio>()),
     );
-    gh.singleton<_i610.ThemeService>(
-      () => _i610.ThemeService(gh<_i460.SharedPreferences>()),
+    gh.factory<_i652.UserApiService>(
+      () => _i652.UserApiService(gh<_i361.Dio>()),
     );
-    gh.factory<_i907.LocalDataSource>(
-      () => _i907.LocalDataSource(gh<_i460.SharedPreferences>()),
+    gh.factory<_i589.TodoRepository>(
+      () => _i603.TodoRepositoryImpl(gh<_i412.TodoApiService>()),
     );
-    gh.factory<_i1028.UserLocalDataSource>(
-      () => _i1028.UserLocalDataSource(gh<_i460.SharedPreferences>()),
-    );
-    gh.factory<_i10.TodoApiService>(() => _i10.TodoApiService(gh<_i361.Dio>()));
-    gh.factory<_i8.UserApiService>(() => _i8.UserApiService(gh<_i361.Dio>()));
-    gh.singleton<_i818.AppBloc>(
-      () => _i818.AppBloc(
-        gh<_i242.LanguageService>(),
-        gh<_i610.ThemeService>(),
-        gh<_i104.ConnectivityService>(),
+    gh.factory<_i806.UserRepository>(
+      () => _i238.UserRepositoryImpl(
+        gh<_i652.UserApiService>(),
+        gh<_i916.UserLocalDataSource>(),
       ),
     );
-    gh.factory<_i1004.TodoRepository>(
-      () => _i425.TodoRepositoryImpl(gh<_i10.TodoApiService>()),
+    gh.factory<_i875.GetUsersUseCase>(
+      () => _i875.GetUsersUseCase(gh<_i806.UserRepository>()),
     );
-    gh.factory<_i1012.UserRepository>(
-      () => _i904.UserRepositoryImpl(
-        gh<_i8.UserApiService>(),
-        gh<_i1028.UserLocalDataSource>(),
-      ),
+    gh.factory<_i241.GetUserByIdUseCase>(
+      () => _i241.GetUserByIdUseCase(gh<_i806.UserRepository>()),
     );
-    gh.factory<_i712.GetTodosUseCase>(
-      () => _i712.GetTodosUseCase(gh<_i1004.TodoRepository>()),
+    gh.factory<_i1005.GetTodosUseCase>(
+      () => _i1005.GetTodosUseCase(gh<_i589.TodoRepository>()),
     );
-    gh.factory<_i927.GetTodoByIdUseCase>(
-      () => _i927.GetTodoByIdUseCase(gh<_i1004.TodoRepository>()),
+    gh.factory<_i302.GetTodoByIdUseCase>(
+      () => _i302.GetTodoByIdUseCase(gh<_i589.TodoRepository>()),
     );
-    gh.factory<_i573.UpdateTodoUseCase>(
-      () => _i573.UpdateTodoUseCase(gh<_i1004.TodoRepository>()),
+    gh.factory<_i379.UpdateTodoUseCase>(
+      () => _i379.UpdateTodoUseCase(gh<_i589.TodoRepository>()),
     );
-    gh.factory<_i832.GetUsersUseCase>(
-      () => _i832.GetUsersUseCase(gh<_i1012.UserRepository>()),
+    gh.factory<_i505.UserCubit>(
+      () => _i505.UserCubit(gh<_i875.GetUsersUseCase>()),
     );
-    gh.factory<_i970.GetUserByIdUseCase>(
-      () => _i970.GetUserByIdUseCase(gh<_i1012.UserRepository>()),
-    );
-    gh.factory<_i578.UserCubit>(
-      () => _i578.UserCubit(gh<_i832.GetUsersUseCase>()),
-    );
-    gh.factory<_i256.TodoCubit>(
-      () => _i256.TodoCubit(
-        gh<_i712.GetTodosUseCase>(),
-        gh<_i573.UpdateTodoUseCase>(),
+    gh.factory<_i204.TodoCubit>(
+      () => _i204.TodoCubit(
+        gh<_i1005.GetTodosUseCase>(),
+        gh<_i379.UpdateTodoUseCase>(),
       ),
     );
     return this;
   }
 }
 
-class _$NetworkModule extends _i899.NetworkModule {}
+class _$NetworkModule extends _i214.NetworkModule {}

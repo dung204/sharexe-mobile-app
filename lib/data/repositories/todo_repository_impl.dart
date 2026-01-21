@@ -1,8 +1,8 @@
-import 'package:base/core/result/result.dart';
-import 'package:base/data/datasources/remote/todo_api_service.dart';
-import 'package:base/data/models/todo_model.dart';
-import 'package:base/domain/entities/todo.dart';
-import 'package:base/domain/repositories/todo_repository.dart';
+import 'package:sharexe/core/result/result.dart';
+import 'package:sharexe/data/datasources/remote/todo_api_service.dart';
+import 'package:sharexe/data/models/todo_model.dart';
+import 'package:sharexe/domain/entities/todo.dart';
+import 'package:sharexe/domain/repositories/todo_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 

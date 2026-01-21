@@ -1,8 +1,8 @@
-import 'package:base/core/result/result.dart';
-import 'package:base/domain/entities/todo.dart';
-import 'package:base/domain/usecases/get_todos_usecase.dart';
-import 'package:base/domain/usecases/update_todo_usecase.dart';
-import 'package:base/presentation/modules/todo/cubit/todo_state.dart';
+import 'package:sharexe/core/result/result.dart';
+import 'package:sharexe/domain/entities/todo.dart';
+import 'package:sharexe/domain/usecases/get_todos_usecase.dart';
+import 'package:sharexe/domain/usecases/update_todo_usecase.dart';
+import 'package:sharexe/presentation/modules/todo/cubit/todo_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 

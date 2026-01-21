@@ -1,4 +1,4 @@
-import 'package:base/core/result/result.dart';
+import 'package:sharexe/core/result/result.dart';
 
 // For use cases with parameters
 abstract class UseCase<Type, Params> {

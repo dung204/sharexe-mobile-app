@@ -1,4 +1,4 @@
-import 'package:base/domain/entities/todo.dart';
+import 'package:sharexe/domain/entities/todo.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '../../../../generated/presentation/modules/todo/cubit/todo_state.freezed.dart';

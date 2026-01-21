@@ -25,6 +25,7 @@ LOG_LEVEL=debug
 ## Running the App
 
 ### Development Flavor
+
 ```bash
 # Debug mode
 fvm flutter run --flavor develop --target lib/main_develop.dart
@@ -34,6 +35,7 @@ fvm flutter run --flavor develop --target lib/main_develop.dart --release
 ```
 
 ### Production Flavor
+
 ```bash
 # Debug mode
 fvm flutter run --flavor production --target lib/main_production.dart
@@ -45,6 +47,7 @@ fvm flutter run --flavor production --target lib/main_production.dart --release
 ## Building the App
 
 ### Android
+
 ```bash
 # Development
 fvm flutter build apk --flavor develop --target lib/main_develop.dart
@@ -54,6 +57,7 @@ fvm flutter build apk --flavor production --target lib/main_production.dart
 ```
 
 ### iOS
+
 ```bash
 # Development
 fvm flutter build ios --flavor develop --target lib/main_develop.dart
@@ -67,7 +71,7 @@ fvm flutter build ios --flavor production --target lib/main_production.dart
 The `FlavorConfig` class provides access to environment-specific values:
 
 ```dart
-import 'package:base/configs/flavor/flavor_config.dart';
+import 'package:sharexe/configs/flavor/flavor_config.dart';
 
 // Get current flavor name
 String flavorName = FlavorConfig.name;
@@ -88,13 +92,14 @@ String appName = FlavorConfig.appName;
 ## App Identifiers
 
 ### Android
+
 - **Development**: `com.stormx.base.dev`
 - **Production**: `com.stormx.base`
 
 ### iOS
+
 - **Development**: `com.stormx.base.dev`
 - **Production**: `com.stormx.base`
-
 
 ## Adding New Environment Variables
 
@@ -103,6 +108,7 @@ String appName = FlavorConfig.appName;
 3. Use `dotenv.env['VARIABLE_NAME']` to read the value
 
 Example:
+
 ```dart
 static String get newVariable {
   return dotenv.env['NEW_VARIABLE'] ?? 'default_value';

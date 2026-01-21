@@ -1,7 +1,7 @@
-import 'package:base/core/result/result.dart';
-import 'package:base/core/usecase/usecase.dart';
-import 'package:base/domain/entities/user.dart';
-import 'package:base/domain/repositories/user_repository.dart';
+import 'package:sharexe/core/result/result.dart';
+import 'package:sharexe/core/usecase/usecase.dart';
+import 'package:sharexe/domain/entities/user.dart';
+import 'package:sharexe/domain/repositories/user_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable

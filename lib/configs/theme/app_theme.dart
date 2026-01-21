@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:base/configs/theme/app_colors.dart';
-import 'package:base/configs/theme/app_text_styles.dart';
+import 'package:sharexe/configs/theme/app_colors.dart';
+import 'package:sharexe/configs/theme/app_text_styles.dart';
 
 class AppTheme {
   static ThemeData get lightTheme {

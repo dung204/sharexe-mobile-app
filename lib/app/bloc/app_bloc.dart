@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:base/core/services/connectivity_service.dart';
-import 'package:base/core/services/language_service.dart';
-import 'package:base/core/services/theme_service.dart';
-import 'package:base/generated/translations/translations.g.dart';
+import 'package:sharexe/core/services/connectivity_service.dart';
+import 'package:sharexe/core/services/language_service.dart';
+import 'package:sharexe/core/services/theme_service.dart';
+import 'package:sharexe/generated/translations/translations.g.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

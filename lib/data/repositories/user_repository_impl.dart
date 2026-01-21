@@ -1,11 +1,11 @@
-import 'package:base/core/error/exception.dart';
-import 'package:base/core/network/network_info.dart';
-import 'package:base/core/result/result.dart';
-import 'package:base/data/datasources/local/user_local_data_source.dart';
-import 'package:base/data/datasources/remote/user_api_service.dart';
-import 'package:base/data/models/user_model.dart';
-import 'package:base/domain/entities/user.dart';
-import 'package:base/domain/repositories/user_repository.dart';
+import 'package:sharexe/core/error/exception.dart';
+import 'package:sharexe/core/network/network_info.dart';
+import 'package:sharexe/core/result/result.dart';
+import 'package:sharexe/data/datasources/local/user_local_data_source.dart';
+import 'package:sharexe/data/datasources/remote/user_api_service.dart';
+import 'package:sharexe/data/models/user_model.dart';
+import 'package:sharexe/domain/entities/user.dart';
+import 'package:sharexe/domain/repositories/user_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 

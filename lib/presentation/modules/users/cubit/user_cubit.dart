@@ -1,6 +1,6 @@
-import 'package:base/core/result/result.dart';
-import 'package:base/domain/entities/user.dart';
-import 'package:base/domain/usecases/get_users_usecase.dart';
+import 'package:sharexe/core/result/result.dart';
+import 'package:sharexe/domain/entities/user.dart';
+import 'package:sharexe/domain/usecases/get_users_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 

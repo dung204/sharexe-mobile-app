@@ -1,4 +1,4 @@
-import 'package:base/generated/translations/translations.g.dart';
+import 'package:sharexe/generated/translations/translations.g.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -2,7 +2,7 @@ import 'package:alice/alice.dart';
 import 'package:alice/core/alice_logger.dart';
 import 'package:alice/model/alice_configuration.dart';
 import 'package:alice_dio/alice_dio_adapter.dart';
-import 'package:base/configs/flavor/flavor_config.dart';
+import 'package:sharexe/configs/flavor/flavor_config.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 

@@ -5,12 +5,14 @@
 ### 1. Setting Up Development Environment
 
 #### Prerequisites
+
 - Flutter SDK (managed via FVM)
 - Dart SDK (included with Flutter)
 - IDE (VS Code or Android Studio)
 - Git
 
 #### Initial Setup
+
 ```bash
 # Clone the repository
 git clone <repository-url>
@@ -32,6 +34,7 @@ fvm dart run build_runner build --delete-conflicting-outputs
 ### 2. Daily Development Workflow
 
 #### Starting Development
+
 ```bash
 # Pull latest changes
 git pull origin main
@@ -47,6 +50,7 @@ fvm flutter run --flavor develop
 ```
 
 #### Code Generation Workflow
+
 ```bash
 # Watch for changes and auto-generate
 fvm dart run build_runner watch --delete-conflicting-outputs
@@ -64,6 +68,7 @@ fvm dart run build_runner build --delete-conflicting-outputs
 #### Creating a New Feature
 
 1. **Create Feature Structure**
+
 ```
 lib/presentation/modules/feature_name/
 ├── cubit/
@@ -87,6 +92,7 @@ lib/data/
 ```
 
 2. **Define Domain Layer**
+
 ```dart
 // lib/domain/entities/feature_entity.dart
 class FeatureEntity extends Equatable {
@@ -94,13 +100,13 @@ class FeatureEntity extends Equatable {
     required this.id,
     required this.name,
   });
-  
+
   final int id;
   final String name;
-  
+
   @override
   List<Object> get props => [id, name];
-  
+
   FeatureEntity copyWith({
     int? id,
     String? name,
@@ -122,9 +128,9 @@ abstract class FeatureRepository {
 @injectable
 class GetFeaturesUseCase extends UseCaseWithoutParams<List<FeatureEntity>> {
   GetFeaturesUseCase(this._repository);
-  
+
   final FeatureRepository _repository;
-  
+
   @override
   Future<Either<Failure, List<FeatureEntity>>> call() async {
     return await _repository.getFeatures();
@@ -133,6 +139,7 @@ class GetFeaturesUseCase extends UseCaseWithoutParams<List<FeatureEntity>> {
 ```
 
 3. **Implement Data Layer**
+
 ```dart
 // lib/data/models/feature_model.dart
 class FeatureModel {
@@ -140,31 +147,31 @@ class FeatureModel {
     required this.id,
     required this.name,
   });
-  
+
   factory FeatureModel.fromJson(Map<String, dynamic> json) {
     return FeatureModel(
       id: json['id'] as int,
       name: json['name'] as String,
     );
   }
-  
+
   factory FeatureModel.fromEntity(FeatureEntity entity) {
     return FeatureModel(
       id: entity.id,
       name: entity.name,
     );
   }
-  
+
   final int id;
   final String name;
-  
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
     };
   }
-  
+
   FeatureEntity toEntity() {
     return FeatureEntity(
       id: id,
@@ -175,18 +182,19 @@ class FeatureModel {
 ```
 
 4. **Create Cubit**
+
 ```dart
 // lib/presentation/modules/feature/cubit/feature_cubit.dart
 @injectable
 class FeatureCubit extends Cubit<FeatureState> {
   FeatureCubit(this._getFeaturesUseCase) : super(FeatureInitial());
-  
+
   final GetFeaturesUseCase _getFeaturesUseCase;
-  
+
   Future<void> fetchFeatures() async {
     emit(FeatureLoading());
     final result = await _getFeaturesUseCase();
-    
+
     result.fold(
       (failure) {
         String errorMessage = 'An unexpected error occurred';
@@ -204,7 +212,7 @@ class FeatureCubit extends Cubit<FeatureState> {
       },
     );
   }
-  
+
   void resetState() {
     emit(FeatureInitial());
   }
@@ -231,6 +239,7 @@ class FeatureError extends FeatureState {
 ```
 
 5. **Register Dependencies**
+
 ```dart
 // lib/core/di/injection.dart
 @module
@@ -248,11 +257,13 @@ abstract class FeatureModule {
 ### 1. Dart/Flutter Conventions
 
 #### File Naming
+
 - Use `snake_case` for file names
 - Use descriptive names that reflect the file's purpose
 - Add appropriate suffixes (`_bloc.dart`, `_model.dart`, `_page.dart`)
 
 #### Class Naming
+
 ```dart
 // Good
 class UserRepository {}
@@ -266,6 +277,7 @@ class user_model {}
 ```
 
 #### Variable Naming
+
 ```dart
 // Good
 final String userName = 'John';
@@ -281,6 +293,7 @@ final List<User> active_users = [];
 ### 2. Code Organization
 
 #### Import Organization
+
 ```dart
 // Dart imports
 import 'dart:async';
@@ -295,38 +308,39 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 
 // Project imports
-import 'package:base/core/error/failures.dart';
-import 'package:base/domain/entities/user.dart';
+import 'package:sharexe/core/error/failures.dart';
+import 'package:sharexe/domain/entities/user.dart';
 ```
 
 #### Class Structure
+
 ```dart
 class ExampleClass {
   // Static constants
   static const String defaultValue = 'default';
-  
+
   // Instance variables
   final String _privateField;
   String publicField;
-  
+
   // Constructor
   ExampleClass({
     required String privateField,
     this.publicField = '',
   }) : _privateField = privateField;
-  
+
   // Named constructors
   ExampleClass.empty() : this(privateField: '');
-  
+
   // Getters
   String get privateField => _privateField;
-  
+
   // Public methods
   void publicMethod() {}
-  
+
   // Private methods
   void _privateMethod() {}
-  
+
   // Overrides
   @override
   String toString() => 'ExampleClass($_privateField)';
@@ -336,17 +350,18 @@ class ExampleClass {
 ### 3. Widget Best Practices
 
 #### Widget Structure
+
 ```dart
 class CustomWidget extends StatelessWidget {
   final String title;
   final VoidCallback? onTap;
-  
+
   const CustomWidget({
     super.key,
     required this.title,
     this.onTap,
   });
-  
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -361,6 +376,7 @@ class CustomWidget extends StatelessWidget {
 ```
 
 #### Use const Constructors
+
 ```dart
 // Good
 const Text('Hello World')
@@ -374,13 +390,14 @@ EdgeInsets.all(8)
 ```
 
 #### Extract Widgets
+
 ```dart
 // Good - Extract complex widgets
 class UserCard extends StatelessWidget {
   final User user;
-  
+
   const UserCard({super.key, required this.user});
-  
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -404,6 +421,7 @@ ListView.builder(
 ### 4. State Management Best Practices
 
 #### Cubit States
+
 ```dart
 // Good - Clear state hierarchy
 abstract class UserState {}
@@ -424,18 +442,19 @@ class UserError extends UserState {
 ```
 
 #### Cubit Implementation
+
 ```dart
 // Good - Proper error handling
 @injectable
 class UserCubit extends Cubit<UserState> {
   UserCubit(this._getUsersUseCase) : super(UserInitial());
-  
+
   final GetUsersUseCase _getUsersUseCase;
-  
+
   Future<void> fetchUsers() async {
     emit(UserLoading());
     final result = await _getUsersUseCase();
-    
+
     result.fold(
       (failure) {
         String errorMessage = 'An unexpected error occurred';
@@ -453,7 +472,7 @@ class UserCubit extends Cubit<UserState> {
       },
     );
   }
-  
+
   void resetState() {
     emit(UserInitial());
   }
@@ -465,27 +484,28 @@ class UserCubit extends Cubit<UserState> {
 ### 1. Unit Testing
 
 #### Test Structure
+
 ```dart
 void main() {
   group('GetUserUseCase', () {
     late GetUserUseCase useCase;
     late MockUserRepository mockRepository;
-    
+
     setUp(() {
       mockRepository = MockUserRepository();
       useCase = GetUserUseCase(mockRepository);
     });
-    
+
     test('should return user when repository call is successful', () async {
       // Arrange
       const userId = '123';
       const user = User(id: userId, name: 'John', email: 'john@example.com');
       when(() => mockRepository.getUser(userId))
           .thenAnswer((_) async => const Right(user));
-      
+
       // Act
       final result = await useCase(userId);
-      
+
       // Assert
       expect(result, const Right(user));
       verify(() => mockRepository.getUser(userId)).called(1);
@@ -506,7 +526,7 @@ void main() {
         name: 'John Doe',
         email: 'john@example.com',
       );
-      
+
       // Act
       await tester.pumpWidget(
         MaterialApp(
@@ -515,7 +535,7 @@ void main() {
           ),
         ),
       );
-      
+
       // Assert
       expect(find.text('John Doe'), findsOneWidget);
       expect(find.text('john@example.com'), findsOneWidget);
@@ -531,12 +551,12 @@ void main() {
   group('UserBloc', () {
     late UserBloc bloc;
     late MockGetUserUseCase mockGetUserUseCase;
-    
+
     setUp(() {
       mockGetUserUseCase = MockGetUserUseCase();
       bloc = UserBloc(mockGetUserUseCase);
     });
-    
+
     blocTest<UserBloc, UserState>(
       'emits [UserLoading, UserLoaded] when GetUserEvent is successful',
       build: () {
@@ -559,6 +579,7 @@ void main() {
 ### 1. Widget Performance
 
 #### Use const Constructors
+
 ```dart
 // Good
 const Text('Static text')
@@ -570,6 +591,7 @@ Icon(Icons.home)
 ```
 
 #### Avoid Rebuilds
+
 ```dart
 // Good - Use BlocBuilder with buildWhen
 BlocBuilder<CounterBloc, CounterState>(
@@ -580,7 +602,7 @@ BlocBuilder<CounterBloc, CounterState>(
 // Good - Extract static widgets
 class StaticWidget extends StatelessWidget {
   const StaticWidget({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return const Text('This never changes');
@@ -591,6 +613,7 @@ class StaticWidget extends StatelessWidget {
 ### 2. Memory Management
 
 #### Dispose Resources
+
 ```dart
 class MyWidget extends StatefulWidget {
   @override
@@ -600,7 +623,7 @@ class MyWidget extends StatefulWidget {
 class _MyWidgetState extends State<MyWidget> {
   late StreamSubscription _subscription;
   late TextEditingController _controller;
-  
+
   @override
   void initState() {
     super.initState();
@@ -609,14 +632,14 @@ class _MyWidgetState extends State<MyWidget> {
       // Handle data
     });
   }
-  
+
   @override
   void dispose() {
     _controller.dispose();
     _subscription.cancel();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return TextField(controller: _controller);
@@ -629,6 +652,7 @@ class _MyWidgetState extends State<MyWidget> {
 ### 1. Common Issues
 
 #### Code Generation Issues
+
 ```bash
 # Clean and regenerate
 fvm dart run build_runner clean
@@ -639,6 +663,7 @@ fvm dart run build_runner build
 ```
 
 #### Dependency Issues
+
 ```bash
 # Clean dependencies
 fvm flutter clean
@@ -651,11 +676,13 @@ fvm flutter pub cache repair
 ### 2. Debugging Tools
 
 #### Flutter Inspector
+
 - Use Flutter Inspector in IDE
 - Analyze widget tree
 - Check performance metrics
 
 #### Logging
+
 ```dart
 // Use logger package
 final logger = Logger();
@@ -667,6 +694,7 @@ logger.e('Error message');
 ```
 
 #### Alice for Network Debugging
+
 ```dart
 // Alice is already configured in the project
 // Check network calls in Alice overlay
@@ -675,6 +703,7 @@ logger.e('Error message');
 ## Git Workflow
 
 ### 1. Branch Naming
+
 ```bash
 # Feature branches
 feature/user-authentication
@@ -689,6 +718,7 @@ hotfix/critical-security-patch
 ```
 
 ### 2. Commit Messages
+
 ```bash
 # Good commit messages
 git commit -m "feat: add user authentication"
@@ -703,10 +733,10 @@ type(scope): description
 ```
 
 ### 3. Pull Request Process
+
 1. Create feature branch from `develop`
 2. Implement feature with tests
 3. Run linting and tests
 4. Create pull request
 5. Code review
 6. Merge to `develop`
-

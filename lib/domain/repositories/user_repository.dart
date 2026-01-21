@@ -1,5 +1,5 @@
-import 'package:base/core/result/result.dart';
-import 'package:base/domain/entities/user.dart';
+import 'package:sharexe/core/result/result.dart';
+import 'package:sharexe/domain/entities/user.dart';
 
 abstract class UserRepository {
   Future<Result<List<User>>> getUsers();

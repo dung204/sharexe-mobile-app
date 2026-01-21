@@ -1,7 +1,7 @@
-import 'package:base/configs/router/app_navigator.dart';
-import 'package:base/configs/router/app_router.dart';
-import 'package:base/generated/translations/translations.g.dart';
-import 'package:base/presentation/shared/environment_info_widget.dart';
+import 'package:sharexe/configs/router/app_navigator.dart';
+import 'package:sharexe/configs/router/app_router.dart';
+import 'package:sharexe/generated/translations/translations.g.dart';
+import 'package:sharexe/presentation/shared/environment_info_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

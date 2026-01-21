@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:base/core/error/exception.dart';
+import 'package:sharexe/core/error/exception.dart';
 
 class NetworkInfo {
   static Future<bool> get isConnected async {

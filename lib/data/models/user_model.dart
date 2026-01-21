@@ -1,4 +1,4 @@
-import 'package:base/domain/entities/user.dart';
+import 'package:sharexe/domain/entities/user.dart';
 
 class UserModel {
   const UserModel({

@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:base/configs/router/app_router.dart';
+import 'package:sharexe/configs/router/app_router.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
