@@ -128,11 +128,19 @@ class $AssetsFontsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/app_logo.png
+  AssetGenImage get appLogo =>
+      const AssetGenImage('assets/images/app_logo.png');
+
+  /// File path: assets/images/city_silhouette.png
+  AssetGenImage get citySilhouette =>
+      const AssetGenImage('assets/images/city_silhouette.png');
+
   /// File path: assets/images/cml.png
   AssetGenImage get cml => const AssetGenImage('assets/images/cml.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [cml];
+  List<AssetGenImage> get values => [appLogo, citySilhouette, cml];
 }
 
 class $AssetsLottiesGen {

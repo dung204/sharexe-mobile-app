@@ -6,6 +6,7 @@
     "pubspec.lock": true,
     "build/**/*": true,
     ".fvm/**/*": true,
-    ".dart_tool/**/*": true
+    ".dart_tool/**/*": true,
+    "lib/generated/**/*": true
   }
 }

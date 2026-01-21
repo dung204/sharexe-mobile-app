@@ -1,0 +1,10 @@
+flutter_native_splash:
+  color: "#40D6AC"
+  image: assets/images/app_logo.png
+  branding: assets/images/city_silhouette.png
+  branding_mode: bottom
+
+  android_12:
+    image: assets/images/app_logo.png
+    color: "#40D6AC"
+    branding: assets/images/city_silhouette.png

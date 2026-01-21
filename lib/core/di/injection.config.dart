@@ -10,10 +10,12 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
+import 'package:firebase_auth/firebase_auth.dart' as _i59;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 import 'package:sharexe/app/bloc/app_bloc.dart' as _i575;
+import 'package:sharexe/core/firebase/firebase_module.dart' as _i735;
 import 'package:sharexe/core/network/network_module.dart' as _i214;
 import 'package:sharexe/core/services/alice_service.dart' as _i861;
 import 'package:sharexe/core/services/connectivity_service.dart' as _i697;
@@ -33,6 +35,8 @@ import 'package:sharexe/domain/usecases/get_todos_usecase.dart' as _i1005;
 import 'package:sharexe/domain/usecases/get_user_by_id_usecase.dart' as _i241;
 import 'package:sharexe/domain/usecases/get_users_usecase.dart' as _i875;
 import 'package:sharexe/domain/usecases/update_todo_usecase.dart' as _i379;
+import 'package:sharexe/presentation/modules/splash/cubit/splash_cubit.dart'
+    as _i703;
 import 'package:sharexe/presentation/modules/todo/cubit/todo_cubit.dart'
     as _i204;
 import 'package:sharexe/presentation/modules/users/cubit/user_cubit.dart'
@@ -46,11 +50,14 @@ extension GetItInjectableX on _i174.GetIt {
   }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final networkModule = _$NetworkModule();
+    final firebaseModule = _$FirebaseModule();
     gh.factory<_i697.ConnectivityService>(() => _i697.ConnectivityService());
+    gh.factory<_i703.SplashCubit>(() => _i703.SplashCubit());
     await gh.singletonAsync<_i460.SharedPreferences>(
       () => networkModule.sharedPreferences,
       preResolve: true,
     );
+    gh.lazySingleton<_i59.FirebaseAuth>(() => firebaseModule.firebaseAuth);
     gh.lazySingleton<_i861.AliceService>(() => _i861.AliceService());
     gh.singleton<_i365.LanguageService>(
       () => _i365.LanguageService(gh<_i460.SharedPreferences>()),
@@ -118,3 +125,5 @@ extension GetItInjectableX on _i174.GetIt {
 }
 
 class _$NetworkModule extends _i214.NetworkModule {}
+
+class _$FirebaseModule extends _i735.FirebaseModule {}
