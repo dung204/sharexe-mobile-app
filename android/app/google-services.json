@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:432802224443:android:e4c52c8a9fd23a652abf1e",
+        "mobilesdk_app_id": "1:432802224443:android:068cad7cd528e92d2abf1e",
         "android_client_info": {
           "package_name": "com.sharexe.app"
         }
@@ -29,6 +29,13 @@
             {
               "client_id": "432802224443-gb7e52u6hog0gsn3rit0p4qn9djvic8m.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "432802224443-nj9ohnbpc1mqitql51n3c4bp1mknfi4r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.stormx.base"
+              }
             }
           ]
         }

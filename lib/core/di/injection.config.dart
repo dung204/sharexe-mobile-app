@@ -24,12 +24,15 @@ import 'package:sharexe/core/services/theme_service.dart' as _i323;
 import 'package:sharexe/data/datasources/local/local_data_source.dart' as _i792;
 import 'package:sharexe/data/datasources/local/user_local_data_source.dart'
     as _i916;
+import 'package:sharexe/data/datasources/remote/firebase_service.dart' as _i970;
 import 'package:sharexe/data/datasources/remote/todo_api_service.dart' as _i412;
 import 'package:sharexe/data/datasources/remote/user_api_service.dart' as _i652;
 import 'package:sharexe/data/repositories/todo_repository_impl.dart' as _i603;
 import 'package:sharexe/data/repositories/user_repository_impl.dart' as _i238;
+import 'package:sharexe/domain/repositories/auth_repository.dart' as _i1010;
 import 'package:sharexe/domain/repositories/todo_repository.dart' as _i589;
 import 'package:sharexe/domain/repositories/user_repository.dart' as _i806;
+import 'package:sharexe/domain/usecases/check_auth_usecase.dart' as _i868;
 import 'package:sharexe/domain/usecases/get_todo_by_id_usecase.dart' as _i302;
 import 'package:sharexe/domain/usecases/get_todos_usecase.dart' as _i1005;
 import 'package:sharexe/domain/usecases/get_user_by_id_usecase.dart' as _i241;
@@ -52,13 +55,12 @@ extension GetItInjectableX on _i174.GetIt {
     final networkModule = _$NetworkModule();
     final firebaseModule = _$FirebaseModule();
     gh.factory<_i697.ConnectivityService>(() => _i697.ConnectivityService());
-    gh.factory<_i703.SplashCubit>(() => _i703.SplashCubit());
     await gh.singletonAsync<_i460.SharedPreferences>(
       () => networkModule.sharedPreferences,
       preResolve: true,
     );
-    gh.lazySingleton<_i59.FirebaseAuth>(() => firebaseModule.firebaseAuth);
     gh.lazySingleton<_i861.AliceService>(() => _i861.AliceService());
+    gh.lazySingleton<_i59.FirebaseAuth>(() => firebaseModule.firebaseAuth);
     gh.singleton<_i365.LanguageService>(
       () => _i365.LanguageService(gh<_i460.SharedPreferences>()),
     );
@@ -78,8 +80,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i697.ConnectivityService>(),
       ),
     );
+    gh.lazySingleton<_i970.FirebaseService>(
+      () => _i970.FirebaseServiceImpl(gh<_i59.FirebaseAuth>()),
+    );
     gh.lazySingleton<_i361.Dio>(
       () => networkModule.dio(gh<_i861.AliceService>()),
+    );
+    gh.factory<_i868.CheckAuthUseCase>(
+      () => _i868.CheckAuthUseCase(gh<_i1010.AuthRepository>()),
+    );
+    gh.factory<_i703.SplashCubit>(
+      () => _i703.SplashCubit(gh<_i868.CheckAuthUseCase>()),
     );
     gh.factory<_i412.TodoApiService>(
       () => _i412.TodoApiService(gh<_i361.Dio>()),
@@ -96,20 +107,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i916.UserLocalDataSource>(),
       ),
     );
+    gh.factory<_i241.GetUserByIdUseCase>(
+      () => _i241.GetUserByIdUseCase(gh<_i806.UserRepository>()),
+    );
     gh.factory<_i875.GetUsersUseCase>(
       () => _i875.GetUsersUseCase(gh<_i806.UserRepository>()),
     );
-    gh.factory<_i241.GetUserByIdUseCase>(
-      () => _i241.GetUserByIdUseCase(gh<_i806.UserRepository>()),
+    gh.factory<_i379.UpdateTodoUseCase>(
+      () => _i379.UpdateTodoUseCase(gh<_i589.TodoRepository>()),
     );
     gh.factory<_i1005.GetTodosUseCase>(
       () => _i1005.GetTodosUseCase(gh<_i589.TodoRepository>()),
     );
     gh.factory<_i302.GetTodoByIdUseCase>(
       () => _i302.GetTodoByIdUseCase(gh<_i589.TodoRepository>()),
-    );
-    gh.factory<_i379.UpdateTodoUseCase>(
-      () => _i379.UpdateTodoUseCase(gh<_i589.TodoRepository>()),
     );
     gh.factory<_i505.UserCubit>(
       () => _i505.UserCubit(gh<_i875.GetUsersUseCase>()),

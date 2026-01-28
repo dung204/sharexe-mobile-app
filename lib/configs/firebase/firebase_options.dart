@@ -3,17 +3,8 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:sharexe/configs/flavor/flavor_config.dart';
 
-/// Default [FirebaseOptions] for use with your Firebase apps.
-///
-/// Example:
-/// ```dart
-/// import 'firebase_options.dart';
-/// // ...
-/// await Firebase.initializeApp(
-///   options: DefaultFirebaseOptions.currentPlatform,
-/// );
-/// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -49,22 +40,21 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBbo0kRIcfdDIHaLv61Bcsmb92l-eSPRsc',
-    appId: '1:432802224443:android:e4c52c8a9fd23a652abf1e',
-    messagingSenderId: '432802224443',
-    projectId: 'compelling-art-417622',
-    storageBucket: 'compelling-art-417622.firebasestorage.app',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: FlavorConfig.getEnv('FIREBASE_API_KEY'),
+    appId: FlavorConfig.getEnv('FIREBASE_ANDROID_API_KEY'),
+    messagingSenderId: FlavorConfig.getEnv('FIREBASE_MESSAGING_SENDER_ID'),
+    projectId: FlavorConfig.getEnv('FIREBASE_PROJECT_ID'),
+    storageBucket: FlavorConfig.getEnv('FIREBASE_STORAGE_BUCKET'),
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD1RwZo29RF3WCEZHbRpczx1cf_fWoHrXY',
-    appId: '1:432802224443:ios:ab678bfbf462a1292abf1e',
-    messagingSenderId: '432802224443',
-    projectId: 'compelling-art-417622',
-    storageBucket: 'compelling-art-417622.firebasestorage.app',
-    iosClientId:
-        '432802224443-nj9ohnbpc1mqitql51n3c4bp1mknfi4r.apps.googleusercontent.com',
-    iosBundleId: 'com.stormx.base',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: FlavorConfig.getEnv('FIREBASE_API_KEY'),
+    appId: FlavorConfig.getEnv('FIREBASE_IOS_API_KEY'),
+    messagingSenderId: FlavorConfig.getEnv('FIREBASE_MESSAGING_SENDER_ID'),
+    projectId: FlavorConfig.getEnv('FIREBASE_PROJECT_ID'),
+    storageBucket: FlavorConfig.getEnv('FIREBASE_STORAGE_BUCKET'),
+    iosClientId: FlavorConfig.getEnv('FIREBASE_IOS_CLIENT_ID'),
+    iosBundleId: FlavorConfig.getEnv('FIREBASE_IOS_BUNDLE_ID'),
   );
 }

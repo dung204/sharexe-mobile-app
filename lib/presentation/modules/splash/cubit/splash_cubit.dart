@@ -1,19 +1,24 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:sharexe/domain/usecases/check_auth_usecase.dart';
 import 'package:sharexe/presentation/modules/splash/cubit/splash_state.dart';
 
 @injectable
 class SplashCubit extends Cubit<SplashState> {
-  // TODO: Inject check authentication use case
-  SplashCubit() : super(const SplashState.initial());
+  SplashCubit(this._checkAuthUseCase) : super(const SplashState.initial());
+
+  final CheckAuthUseCase _checkAuthUseCase;
 
   Future<void> init() async {
-    await Future.delayed(const Duration(seconds: 2));
-    await _checkAuthStatus();
-  }
+    final [_, isLoggedIn as bool] = await Future.wait([
+      Future.delayed(const Duration(seconds: 2)),
+      Future.value(_checkAuthUseCase.call()),
+    ]);
 
-  Future<void> _checkAuthStatus() async {
-    // TODO: Implement authentication status check
-    emit(const SplashState.authenticated());
+    emit(
+      isLoggedIn
+          ? const SplashState.authenticated()
+          : const SplashState.unauthenticated(),
+    );
   }
 }

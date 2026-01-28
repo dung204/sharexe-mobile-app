@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:sharexe/app/bloc/app_bloc.dart';
+import 'package:sharexe/configs/firebase/firebase_options.dart';
 import 'package:sharexe/configs/flavor/flavor_config.dart';
 import 'package:sharexe/configs/router/app_navigator.dart';
 import 'package:sharexe/configs/router/app_router.dart';
@@ -15,6 +17,8 @@ void main() async {
 
   // Load environment variables based on flavor
   await FlavorConfig.loadEnv();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Initialize dependency injection
   await configureDependencies();

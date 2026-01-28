@@ -27,6 +27,9 @@ class FlavorConfig {
     await dotenv.load(fileName: envFile);
   }
 
+  static String getEnv(String key, {String defaultValue = ''}) =>
+      dotenv.env[key] ?? defaultValue;
+
   static String get apiBaseUrl {
     return dotenv.env['BASE_URL'] ?? _getDefaultApiBaseUrl();
   }
