@@ -5,6 +5,7 @@ part '../../../../generated/presentation/modules/splash/cubit/splash_state.freez
 @freezed
 class SplashState with _$SplashState {
   const factory SplashState.initial() = SplashInitial;
+  const factory SplashState.firstRun() = SplashFirstRun;
   const factory SplashState.unauthenticated() = SplashUnauthenticated;
   const factory SplashState.authenticated() = SplashAuthenticated;
 }

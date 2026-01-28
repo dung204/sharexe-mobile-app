@@ -55,11 +55,12 @@ extension SplashStatePatterns on SplashState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SplashInitial value)?  initial,TResult Function( SplashUnauthenticated value)?  unauthenticated,TResult Function( SplashAuthenticated value)?  authenticated,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SplashInitial value)?  initial,TResult Function( SplashFirstRun value)?  firstRun,TResult Function( SplashUnauthenticated value)?  unauthenticated,TResult Function( SplashAuthenticated value)?  authenticated,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case SplashInitial() when initial != null:
-return initial(_that);case SplashUnauthenticated() when unauthenticated != null:
+return initial(_that);case SplashFirstRun() when firstRun != null:
+return firstRun(_that);case SplashUnauthenticated() when unauthenticated != null:
 return unauthenticated(_that);case SplashAuthenticated() when authenticated != null:
 return authenticated(_that);case _:
   return orElse();
@@ -79,11 +80,12 @@ return authenticated(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SplashInitial value)  initial,required TResult Function( SplashUnauthenticated value)  unauthenticated,required TResult Function( SplashAuthenticated value)  authenticated,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SplashInitial value)  initial,required TResult Function( SplashFirstRun value)  firstRun,required TResult Function( SplashUnauthenticated value)  unauthenticated,required TResult Function( SplashAuthenticated value)  authenticated,}){
 final _that = this;
 switch (_that) {
 case SplashInitial():
-return initial(_that);case SplashUnauthenticated():
+return initial(_that);case SplashFirstRun():
+return firstRun(_that);case SplashUnauthenticated():
 return unauthenticated(_that);case SplashAuthenticated():
 return authenticated(_that);case _:
   throw StateError('Unexpected subclass');
@@ -102,11 +104,12 @@ return authenticated(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SplashInitial value)?  initial,TResult? Function( SplashUnauthenticated value)?  unauthenticated,TResult? Function( SplashAuthenticated value)?  authenticated,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SplashInitial value)?  initial,TResult? Function( SplashFirstRun value)?  firstRun,TResult? Function( SplashUnauthenticated value)?  unauthenticated,TResult? Function( SplashAuthenticated value)?  authenticated,}){
 final _that = this;
 switch (_that) {
 case SplashInitial() when initial != null:
-return initial(_that);case SplashUnauthenticated() when unauthenticated != null:
+return initial(_that);case SplashFirstRun() when firstRun != null:
+return firstRun(_that);case SplashUnauthenticated() when unauthenticated != null:
 return unauthenticated(_that);case SplashAuthenticated() when authenticated != null:
 return authenticated(_that);case _:
   return null;
@@ -125,10 +128,11 @@ return authenticated(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  unauthenticated,TResult Function()?  authenticated,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  firstRun,TResult Function()?  unauthenticated,TResult Function()?  authenticated,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case SplashInitial() when initial != null:
-return initial();case SplashUnauthenticated() when unauthenticated != null:
+return initial();case SplashFirstRun() when firstRun != null:
+return firstRun();case SplashUnauthenticated() when unauthenticated != null:
 return unauthenticated();case SplashAuthenticated() when authenticated != null:
 return authenticated();case _:
   return orElse();
@@ -148,10 +152,11 @@ return authenticated();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  unauthenticated,required TResult Function()  authenticated,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  firstRun,required TResult Function()  unauthenticated,required TResult Function()  authenticated,}) {final _that = this;
 switch (_that) {
 case SplashInitial():
-return initial();case SplashUnauthenticated():
+return initial();case SplashFirstRun():
+return firstRun();case SplashUnauthenticated():
 return unauthenticated();case SplashAuthenticated():
 return authenticated();case _:
   throw StateError('Unexpected subclass');
@@ -170,10 +175,11 @@ return authenticated();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  unauthenticated,TResult? Function()?  authenticated,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  firstRun,TResult? Function()?  unauthenticated,TResult? Function()?  authenticated,}) {final _that = this;
 switch (_that) {
 case SplashInitial() when initial != null:
-return initial();case SplashUnauthenticated() when unauthenticated != null:
+return initial();case SplashFirstRun() when firstRun != null:
+return firstRun();case SplashUnauthenticated() when unauthenticated != null:
 return unauthenticated();case SplashAuthenticated() when authenticated != null:
 return authenticated();case _:
   return null;
@@ -207,6 +213,38 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'SplashState.initial()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class SplashFirstRun implements SplashState {
+  const SplashFirstRun();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashFirstRun);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'SplashState.firstRun()';
 }
 
 

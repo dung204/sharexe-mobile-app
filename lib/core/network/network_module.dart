@@ -7,7 +7,6 @@ import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 @module
 abstract class NetworkModule {
@@ -62,9 +61,4 @@ abstract class NetworkModule {
 
     return dio;
   }
-
-  @preResolve
-  @singleton
-  Future<SharedPreferences> get sharedPreferences =>
-      SharedPreferences.getInstance();
 }

@@ -136,8 +136,27 @@ class $AssetsImagesGen {
   /// File path: assets/images/cml.png
   AssetGenImage get cml => const AssetGenImage('assets/images/cml.png');
 
+  /// File path: assets/images/onboarding1.png
+  AssetGenImage get onboarding1 =>
+      const AssetGenImage('assets/images/onboarding1.png');
+
+  /// File path: assets/images/onboarding2.png
+  AssetGenImage get onboarding2 =>
+      const AssetGenImage('assets/images/onboarding2.png');
+
+  /// File path: assets/images/onboarding3.png
+  AssetGenImage get onboarding3 =>
+      const AssetGenImage('assets/images/onboarding3.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [appLogo, citySilhouette, cml];
+  List<AssetGenImage> get values => [
+    appLogo,
+    citySilhouette,
+    cml,
+    onboarding1,
+    onboarding2,
+    onboarding3,
+  ];
 }
 
 class $AssetsLottiesGen {
