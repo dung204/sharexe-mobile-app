@@ -19,6 +19,9 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsEnvGen {
   const $AssetsEnvGen();
 
+  /// File path: assets/env/.env
+  String get aEnv => 'assets/env/.env';
+
   /// File path: assets/env/.env.dev
   String get aEnvDev => 'assets/env/.env.dev';
 
@@ -29,7 +32,7 @@ class $AssetsEnvGen {
   String get aEnvProduction => 'assets/env/.env.production';
 
   /// List of all assets
-  List<String> get values => [aEnvDev, aEnvExample, aEnvProduction];
+  List<String> get values => [aEnv, aEnvDev, aEnvExample, aEnvProduction];
 }
 
 class $AssetsFontsGen {
@@ -136,6 +139,13 @@ class $AssetsImagesGen {
   /// File path: assets/images/cml.png
   AssetGenImage get cml => const AssetGenImage('assets/images/cml.png');
 
+  /// File path: assets/images/flag_vn.png
+  AssetGenImage get flagVn => const AssetGenImage('assets/images/flag_vn.png');
+
+  /// File path: assets/images/google_logo.png
+  AssetGenImage get googleLogo =>
+      const AssetGenImage('assets/images/google_logo.png');
+
   /// File path: assets/images/onboarding1.png
   AssetGenImage get onboarding1 =>
       const AssetGenImage('assets/images/onboarding1.png');
@@ -153,6 +163,8 @@ class $AssetsImagesGen {
     appLogo,
     citySilhouette,
     cml,
+    flagVn,
+    googleLogo,
     onboarding1,
     onboarding2,
     onboarding3,

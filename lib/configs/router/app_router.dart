@@ -1,4 +1,5 @@
 import 'package:sharexe/core/di/injection.dart';
+import 'package:sharexe/presentation/modules/auth/auth_page.dart';
 import 'package:sharexe/presentation/modules/home/home_page.dart';
 import 'package:sharexe/presentation/modules/onboarding/onboarding_page.dart';
 import 'package:sharexe/presentation/modules/settings/app_settings_page.dart';
@@ -14,6 +15,7 @@ import 'package:go_router/go_router.dart';
 class AppRoutes {
   static const String splash = '/';
   static const String onboarding = '/onboarding';
+  static const String auth = '/auth';
   static const String home = '/home';
   static const String users = '/users';
   static const String todos = '/todos';
@@ -35,6 +37,10 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.onboarding,
         builder: (context, state) => const OnboardingPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.auth,
+        builder: (context, state) => const AuthPage(),
       ),
       GoRoute(
         path: AppRoutes.home,

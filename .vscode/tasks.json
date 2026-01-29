@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Generate code with build_runner",
+      "type": "dart",
+      "command": "dart",
+      "args": ["run", "build_runner", "build", "--delete-conflicting-outputs"],
+      "problemMatcher": ["$dart-build_runner"],
+      "group": {
+        "kind": "build"
+      }
+    },
+    {
+      "label": "Generate code with build_runner (watch mode)",
+      "type": "dart",
+      "command": "dart",
+      "args": ["run", "build_runner", "watch", "--delete-conflicting-outputs"],
+      "problemMatcher": ["$dart-build_runner"],
+      "isBackground": true,
+      "group": {
+        "kind": "build"
+      }
+    }
+  ]
+}

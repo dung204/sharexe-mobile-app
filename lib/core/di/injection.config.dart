@@ -63,8 +63,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => localModule.sharedPreferences,
       preResolve: true,
     );
-    gh.lazySingleton<_i861.AliceService>(() => _i861.AliceService());
     gh.lazySingleton<_i59.FirebaseAuth>(() => firebaseModule.firebaseAuth);
+    gh.lazySingleton<_i861.AliceService>(() => _i861.AliceService());
     gh.singleton<_i365.LanguageService>(
       () => _i365.LanguageService(gh<_i460.SharedPreferences>()),
     );
@@ -120,20 +120,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i916.UserLocalDataSource>(),
       ),
     );
-    gh.factory<_i241.GetUserByIdUseCase>(
-      () => _i241.GetUserByIdUseCase(gh<_i806.UserRepository>()),
-    );
     gh.factory<_i875.GetUsersUseCase>(
       () => _i875.GetUsersUseCase(gh<_i806.UserRepository>()),
     );
-    gh.factory<_i379.UpdateTodoUseCase>(
-      () => _i379.UpdateTodoUseCase(gh<_i589.TodoRepository>()),
+    gh.factory<_i241.GetUserByIdUseCase>(
+      () => _i241.GetUserByIdUseCase(gh<_i806.UserRepository>()),
     );
     gh.factory<_i1005.GetTodosUseCase>(
       () => _i1005.GetTodosUseCase(gh<_i589.TodoRepository>()),
     );
     gh.factory<_i302.GetTodoByIdUseCase>(
       () => _i302.GetTodoByIdUseCase(gh<_i589.TodoRepository>()),
+    );
+    gh.factory<_i379.UpdateTodoUseCase>(
+      () => _i379.UpdateTodoUseCase(gh<_i589.TodoRepository>()),
     );
     gh.factory<_i505.UserCubit>(
       () => _i505.UserCubit(gh<_i875.GetUsersUseCase>()),
