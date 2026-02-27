@@ -1,3 +1,4 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sharexe/app/bloc/app_bloc.dart';
 import 'package:sharexe/configs/firebase/firebase_options.dart';
@@ -18,7 +19,19 @@ void main() async {
   // Load environment variables based on flavor
   await FlavorConfig.loadEnv();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  if (Firebase.apps.isEmpty) {
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } catch (e) {
+      debugPrint('Firebase initialization error: $e');
+    }
+  } else {
+    debugPrint('Firebase already initialized. Using existing instance.');
+  }
+
+  await getIt.reset();
 
   // Initialize dependency injection
   await configureDependencies();
@@ -53,7 +66,10 @@ class MyApp extends StatelessWidget {
             routerConfig: AppRouter.router,
             locale: state.currentLocale?.flutterLocale,
             supportedLocales: AppLocale.values.map((e) => e.flutterLocale),
-            localizationsDelegates: GlobalMaterialLocalizations.delegates,
+            localizationsDelegates: const [
+              CountryLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+            ],
           );
         },
       ),

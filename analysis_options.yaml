@@ -11,9 +11,9 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude:
-    - '**/*.g.dart'
-    - '**/*.freezed.dart'
-    - '**/*.mocks.dart'
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.mocks.dart"
   errors:
     # Treat these as errors instead of warnings
     avoid_print: error
@@ -24,7 +24,7 @@ analyzer:
     # Make all warnings fatal in CI
     missing_return: error
     invalid_assignment: error
-  
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`

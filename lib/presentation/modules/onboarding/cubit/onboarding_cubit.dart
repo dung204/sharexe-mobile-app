@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:sharexe/data/datasources/local/app_preferences.dart';
 
+@injectable
 class OnboardingCubit extends Cubit<int> {
   OnboardingCubit(this._appPreferences) : super(0);
 

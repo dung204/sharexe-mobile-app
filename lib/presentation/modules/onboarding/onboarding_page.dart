@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sharexe/configs/router/app_router.dart';
+import 'package:sharexe/configs/theme/app_styles.dart';
 import 'package:sharexe/core/di/injection.dart';
 import 'package:sharexe/generated/assets/assets.gen.dart';
 import 'package:sharexe/presentation/modules/onboarding/cubit/onboarding_cubit.dart';
@@ -40,117 +41,155 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final colorScheme = theme.colorScheme;
+
     return BlocProvider(
       create: (_) => getIt<OnboardingCubit>(),
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: SafeArea(
-          child: BlocBuilder(
+          child: BlocBuilder<OnboardingCubit, int>(
             builder: (context, currentIndex) {
               final cubit = context.read<OnboardingCubit>();
               final isLastPage = currentIndex == _items.length - 1;
+              final screenWidth = MediaQuery.of(context).size.width;
 
-              return Column(
-                children: [
-                  // PageView - the sliding part
-                  Expanded(
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemCount: _items.length,
-                      onPageChanged: cubit.onPageChanged,
-                      itemBuilder: (context, index) {
-                        final item = _items[index];
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Image (50% of the screen)
-                            Expanded(
-                              flex: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.all(32.0),
-                                child: Image.asset(item.imagePath),
-                              ),
-                            ),
-                            // Text
-                            Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 24.0,
-                                ),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      item.title,
-                                      style: const TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Text(
-                                      item.description,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                        height: 1.5,
-                                      ),
-                                    ),
-                                  ],
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24.0),
+                child: Column(
+                  children: [
+                    // PageView - the sliding part
+                    Expanded(
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemCount: _items.length,
+                        onPageChanged: cubit.onPageChanged,
+                        itemBuilder: (context, index) {
+                          final item = _items[index];
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Image (50% of the screen)
+                              Expanded(
+                                flex: 3,
+                                child: Center(
+                                  child: Image.asset(
+                                    item.imagePath,
+                                    width: screenWidth * 0.8,
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        );
-                      },
+                              // Text
+                              Expanded(
+                                flex: 2,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        item.title,
+                                        style: textTheme.headlineSmall
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        item.description,
+                                        textAlign: TextAlign.center,
+                                        style: textTheme.bodyLarge,
+                                      ),
+                                      const Spacer(),
+
+                                      AnimatedSwitcher(
+                                        duration: const Duration(
+                                          milliseconds: 300,
+                                        ),
+                                        child: isLastPage
+                                            ? SizedBox(
+                                                width: 190,
+                                                height: 50,
+                                                child: ElevatedButton(
+                                                  onPressed: () async {
+                                                    await cubit
+                                                        .completeOnboarding();
+                                                    if (context.mounted) {
+                                                      context.go(
+                                                        AppRoutes.auth,
+                                                      );
+                                                    }
+                                                  },
+                                                  child: const Text(
+                                                    'GET STARTED!',
+                                                  ),
+                                                ),
+                                              )
+                                            : SizedBox(
+                                                height: 50,
+                                                child: TextButton(
+                                                  onPressed: () => {
+                                                    _pageController.nextPage(
+                                                      duration: const Duration(
+                                                        milliseconds: 300,
+                                                      ),
+                                                      curve: Curves.easeInOut,
+                                                    ),
+                                                  },
+                                                  style:
+                                                      TextButton.styleFrom(
+                                                        shape:
+                                                            const CircleBorder(),
+                                                      ).merge(
+                                                        AppStyles
+                                                            .button
+                                                            .iconPrimary,
+                                                      ),
+                                                  child: const Icon(
+                                                    Icons.arrow_forward_ios,
+                                                  ),
+                                                ),
+                                              ),
+                                      ),
+
+                                      const Spacer(),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     ),
-                  ),
 
-                  // Footer (Indicator + Button)
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 48),
-                    child: Column(
+                    // Footer (Indicator + Button)
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         // The indicator
                         SmoothPageIndicator(
                           controller: _pageController,
                           count: _items.length,
-                          effect: const ExpandingDotsEffect(
-                            activeDotColor: Color(0xFF40D6AC),
-                            dotColor: Color(0xFFE0E0E0),
+                          effect: ExpandingDotsEffect(
+                            activeDotColor: colorScheme.primary,
+                            dotColor: theme.brightness == Brightness.dark
+                                ? Colors.grey.shade700
+                                : Colors.grey.shade200,
                             dotHeight: 8,
                             dotWidth: 8,
                           ),
                         ),
 
                         const SizedBox(height: 32),
-
-                        // Get started button - only available in last page
-                        if (isLastPage)
-                          SizedBox(
-                            width: double.infinity,
-                            height: 50,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                await cubit.completeOnboarding();
-                                if (context.mounted) context.go(AppRoutes.home);
-                              },
-                              child: const Text(
-                                'GET STARTED!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             },
           ),

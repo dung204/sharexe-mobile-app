@@ -1,17 +1,37 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
-  static const Color primary = Color(0xFF6366F1);
-  static const Color primaryDark = Color(0xFF4F46E5);
-  static const Color secondary = Color(0xFF10B981);
-  static const Color background = Color(0xFFF9FAFB);
-  static const Color surface = Color(0xFFFFFFFF);
-  static const Color error = Color(0xFFEF4444);
-  static const Color onPrimary = Color(0xFFFFFFFF);
-  static const Color onSecondary = Color(0xFFFFFFFF);
-  static const Color onBackground = Color(0xFF111827);
-  static const Color onSurface = Color(0xFF111827);
-  static const Color onError = Color(0xFFFFFFFF);
+final class AppColors {
+  AppColors._();
+
+  // --- Brand Colors (Lấy từ nút Get Started & Logo) ---
+  static const Color primary = Color(0xFF40D6AC); // Màu xanh ngọc chủ đạo
+  static const Color primaryDark = Color(
+    0xFF2EA082,
+  ); // Màu tối hơn (dùng khi press/hover)
+
+  // Màu phụ (Lấy từ màu đỏ của Pin map hoặc icon xe taxi)
+  static const Color secondary = Color(
+    0xFFFF5252,
+  ); // Màu đỏ cam (Location Pin) - Dùng làm điểm nhấn
+
+  // --- Background Colors ---
+  static const Color background = Color(
+    0xFFF3F4F6,
+  ); // Màu nền xám nhạt (Layer dưới của màn Auth)
+  static const Color surface = Color(0xFFFFFFFF); // Màu nền trắng (Card, Input)
+
+  // --- Status Colors ---
+  static const Color error = Color(
+    0xFFEF4444,
+  ); // Màu lỗi (Giữ nguyên chuẩn Tailwind)
+  static const Color success = Color(0xFF10B981); // Màu thành công (nếu cần)
+
+  // --- On Colors (Màu chữ/icon trên nền màu) ---
+  static const Color onPrimary = Color(0xFFFFFFFF); // Chữ trắng trên nền xanh
+  static const Color onSecondary = Color(0xFFFFFFFF); // Chữ trắng trên nền đỏ
+  static const Color onBackground = Color(0xFF1F2937); // Chữ đen trên nền xám
+  static const Color onSurface = Color(0xFF1F2937); // Chữ đen trên nền trắng
+  static const Color onError = Color(0xFFFFFFFF); // Chữ trắng trên nền đỏ lỗi
 
   // Additional colors
   static const Color grey50 = Color(0xFFF9FAFB);

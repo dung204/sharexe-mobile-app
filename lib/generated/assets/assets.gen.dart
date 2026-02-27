@@ -132,6 +132,10 @@ class $AssetsImagesGen {
   AssetGenImage get appLogo =>
       const AssetGenImage('assets/images/app_logo.png');
 
+  /// File path: assets/images/app_logo_with_shadow.png
+  AssetGenImage get appLogoWithShadow =>
+      const AssetGenImage('assets/images/app_logo_with_shadow.png');
+
   /// File path: assets/images/city_silhouette.png
   AssetGenImage get citySilhouette =>
       const AssetGenImage('assets/images/city_silhouette.png');
@@ -161,6 +165,7 @@ class $AssetsImagesGen {
   /// List of all assets
   List<AssetGenImage> get values => [
     appLogo,
+    appLogoWithShadow,
     citySilhouette,
     cml,
     flagVn,

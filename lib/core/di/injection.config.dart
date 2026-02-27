@@ -41,6 +41,8 @@ import 'package:sharexe/domain/usecases/get_todos_usecase.dart' as _i1005;
 import 'package:sharexe/domain/usecases/get_user_by_id_usecase.dart' as _i241;
 import 'package:sharexe/domain/usecases/get_users_usecase.dart' as _i875;
 import 'package:sharexe/domain/usecases/update_todo_usecase.dart' as _i379;
+import 'package:sharexe/presentation/modules/onboarding/cubit/onboarding_cubit.dart'
+    as _i684;
 import 'package:sharexe/presentation/modules/splash/cubit/splash_cubit.dart'
     as _i703;
 import 'package:sharexe/presentation/modules/todo/cubit/todo_cubit.dart'
@@ -79,6 +81,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i618.AppPreferences>(
       () => _i618.AppPreferences(gh<_i460.SharedPreferences>()),
+    );
+    gh.factory<_i684.OnboardingCubit>(
+      () => _i684.OnboardingCubit(gh<_i618.AppPreferences>()),
     );
     gh.singleton<_i575.AppBloc>(
       () => _i575.AppBloc(

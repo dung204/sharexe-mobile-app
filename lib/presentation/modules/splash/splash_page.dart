@@ -12,18 +12,21 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return BlocProvider(
       create: (context) => getIt<SplashCubit>()..init(),
       child: BlocListener<SplashCubit, SplashState>(
         listener: (context, state) {
           state.whenOrNull(
             firstRun: () => context.go(AppRoutes.onboarding),
-            authenticated: () => context.go(AppRoutes.home),
-            unauthenticated: () => context.go(AppRoutes.home),
+            authenticated: () => context.go(AppRoutes.auth),
+            unauthenticated: () => context.go(AppRoutes.auth),
           );
         },
         child: Scaffold(
-          backgroundColor: const Color(0xFF40D6AC),
+          backgroundColor: colorScheme.primary,
           body: Stack(
             children: [
               // App logo
@@ -31,24 +34,17 @@ class SplashPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        shape: BoxShape.circle,
-                      ),
-                      padding: const EdgeInsets.all(20),
-                      child: Assets.images.appLogo.image(),
+                      height: 127,
+                      child: Assets.images.appLogoWithShadow.image(),
                     ),
                     const SizedBox(height: 16),
-                    const Text(
+                    Text(
                       'ShareXe',
-                      style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontFamily: 'SF Pro Display',
+                      style: textTheme.displayMedium?.copyWith(
+                        color: colorScheme.onPrimary,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
@@ -62,7 +58,7 @@ class SplashPage extends StatelessWidget {
                 right: 0,
                 child: Assets.images.citySilhouette.image(
                   fit: BoxFit.contain,
-                  color: Colors.white.withValues(alpha: 0.3),
+                  color: colorScheme.onPrimary,
                 ),
               ),
             ],
