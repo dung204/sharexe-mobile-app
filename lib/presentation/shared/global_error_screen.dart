@@ -1,6 +1,4 @@
-import 'package:sharexe/configs/router/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class GlobalErrorScreen extends StatelessWidget {
   const GlobalErrorScreen({super.key});
@@ -18,7 +16,9 @@ class GlobalErrorScreen extends StatelessWidget {
             const Text('Page not found', style: TextStyle(fontSize: 18)),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () => context.go(AppRoutes.home),
+              onPressed: () => {
+                // TODO: context.go(AppRoutes.home),
+              },
               child: const Text('Go Home'),
             ),
           ],

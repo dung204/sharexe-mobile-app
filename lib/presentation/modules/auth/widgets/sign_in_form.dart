@@ -1,33 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:sharexe/configs/theme/app_styles.dart';
 
-class SignInForm extends StatelessWidget {
+class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
 
   @override
+  State<SignInForm> createState() => _SignInFormState();
+}
+
+class _SignInFormState extends State<SignInForm> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(height: 20),
-        Text('Login with your email to continue', style: textTheme.bodyMedium),
-        const SizedBox(height: 20),
-
+        // Email Field
         TextFormField(
+          controller: _emailController,
           keyboardType: TextInputType.emailAddress,
-          decoration: AppStyles.input.auth(
-            hintText: 'name@example.com',
-            suffixIcon: const Icon(Icons.clear),
-          ),
+          decoration: AppStyles.input.auth(hintText: 'name@example.com'),
         ),
+        const SizedBox(height: 16),
 
-        const Spacer(),
+        // Password Field
+        TextFormField(
+          controller: _passwordController,
+          obscureText: true,
+          decoration: AppStyles.input.auth(hintText: 'Password'),
+        ),
+        const SizedBox(height: 24),
 
         SizedBox(
           width: double.infinity,
           height: 50,
-          child: ElevatedButton(onPressed: () {}, child: const Text('Next')),
+          child: ElevatedButton(
+            onPressed: () {
+              final email = _emailController.text.trim();
+              final password = _passwordController.text;
+              if (email.isNotEmpty && password.isNotEmpty) {
+                // TODO: sign in with email and password
+              }
+            },
+            child: const Text('Sign In'),
+          ),
         ),
       ],
     );

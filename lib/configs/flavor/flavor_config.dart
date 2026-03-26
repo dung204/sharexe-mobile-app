@@ -69,11 +69,11 @@ class FlavorConfig {
   static String _getDefaultBundleId() {
     switch (appFlavor) {
       case Flavor.develop:
-        return 'com.stormx.base.dev';
+        return 'com.sharexe.app.dev';
       case Flavor.production:
-        return 'com.stormx.base';
+        return 'com.sharexe.app';
       default:
-        return 'com.stormx.base';
+        return 'com.sharexe.app';
     }
   }
 
@@ -84,11 +84,11 @@ class FlavorConfig {
   static String _getDefaultAppName() {
     switch (appFlavor) {
       case Flavor.develop:
-        return 'Base Dev';
+        return 'ShareXe Dev';
       case Flavor.production:
-        return 'Base';
+        return 'ShareXe';
       default:
-        return 'Base';
+        return 'ShareXe';
     }
   }
 }

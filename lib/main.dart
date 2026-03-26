@@ -1,5 +1,6 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sharexe/app/bloc/app_bloc.dart';
 import 'package:sharexe/configs/firebase/firebase_options.dart';
 import 'package:sharexe/configs/flavor/flavor_config.dart';
@@ -12,6 +13,7 @@ import 'package:sharexe/generated/translations/translations.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sharexe/presentation/modules/auth/cubit/auth_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +32,8 @@ void main() async {
   } else {
     debugPrint('Firebase already initialized. Using existing instance.');
   }
+
+  await GoogleSignIn.instance.initialize();
 
   await getIt.reset();
 
@@ -53,8 +57,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<AppBloc>()..add(const AppInitializeEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              getIt<AppBloc>()..add(const AppInitializeEvent()),
+        ),
+        BlocProvider(
+          lazy: false,
+          create: (context) => getIt<AuthCubit>()..checkAuth(),
+        ),
+      ],
       child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
           return MaterialApp.router(

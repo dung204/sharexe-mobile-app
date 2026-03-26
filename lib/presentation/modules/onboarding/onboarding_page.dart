@@ -119,7 +119,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                                         .completeOnboarding();
                                                     if (context.mounted) {
                                                       context.go(
-                                                        AppRoutes.auth,
+                                                        AppRoutes.home,
                                                       );
                                                     }
                                                   },

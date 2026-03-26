@@ -1,56 +1,72 @@
-import 'package:sharexe/domain/entities/user.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:sharexe/data/models/base_model.dart';
+import 'package:sharexe/data/models/file_response_model.dart';
+import 'package:sharexe/domain/entities/user_entity.dart';
 
-class UserModel {
-  const UserModel({
-    required this.id,
-    required this.name,
+part '../../generated/data/models/user_model.g.dart';
+
+@JsonSerializable(explicitToJson: true)
+class UserModel extends BaseModel {
+  UserModel({
+    required super.id,
+    required super.createdAt,
+    required this.role,
     required this.email,
-    this.phone,
-    this.website,
+    required this.fullName,
+    required this.gender,
+    required this.dateOfBirth,
+    super.createdBy,
+    super.lastModifiedAt,
+    super.lastModifiedBy,
+    super.deletedAt,
+    this.avatar,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      email: json['email'] as String,
-      phone: json['phone'] as String?,
-      website: json['website'] as String?,
-    );
-  }
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 
-  factory UserModel.fromEntity(User user) {
+  factory UserModel.fromEntity(UserEntity user) {
     return UserModel(
       id: user.id,
-      name: user.name,
+      createdAt: user.createdAt,
+      createdBy: user.createdBy,
+      lastModifiedAt: user.lastModifiedAt,
+      lastModifiedBy: user.lastModifiedBy,
+      deletedAt: user.deletedAt,
+      role: user.role,
       email: user.email,
-      phone: user.phone,
-      website: user.website,
+      fullName: user.fullName,
+      gender: user.gender,
+      dateOfBirth: user.dateOfBirth,
+      avatar: user.avatar != null
+          ? FileResponseModel.fromEntity(user.avatar!)
+          : null,
     );
   }
-  final int id;
-  final String name;
-  final String email;
-  final String? phone;
-  final String? website;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'phone': phone,
-      'website': website,
-    };
-  }
+  final String role;
+  final String? email;
+  final String? fullName;
+  final String? gender;
+  final DateTime? dateOfBirth;
+  final FileResponseModel? avatar;
 
-  User toEntity() {
-    return User(
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
+
+  UserEntity toEntity() {
+    return UserEntity(
       id: id,
-      name: name,
+      createdAt: createdAt,
+      createdBy: createdBy,
+      lastModifiedAt: lastModifiedAt,
+      lastModifiedBy: lastModifiedBy,
+      deletedAt: deletedAt,
+      role: role,
       email: email,
-      phone: phone,
-      website: website,
+      fullName: fullName,
+      gender: gender,
+      dateOfBirth: dateOfBirth,
+      avatar: avatar?.toEntity(),
     );
   }
 }

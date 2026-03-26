@@ -42,7 +42,7 @@ class DefaultFirebaseOptions {
 
   static FirebaseOptions android = FirebaseOptions(
     apiKey: FlavorConfig.getEnv('FIREBASE_API_KEY'),
-    appId: FlavorConfig.getEnv('FIREBASE_ANDROID_API_KEY'),
+    appId: FlavorConfig.getEnv('FIREBASE_ANDROID_APP_ID'),
     messagingSenderId: FlavorConfig.getEnv('FIREBASE_MESSAGING_SENDER_ID'),
     projectId: FlavorConfig.getEnv('FIREBASE_PROJECT_ID'),
     storageBucket: FlavorConfig.getEnv('FIREBASE_STORAGE_BUCKET'),
@@ -50,7 +50,7 @@ class DefaultFirebaseOptions {
 
   static FirebaseOptions ios = FirebaseOptions(
     apiKey: FlavorConfig.getEnv('FIREBASE_API_KEY'),
-    appId: FlavorConfig.getEnv('FIREBASE_IOS_API_KEY'),
+    appId: FlavorConfig.getEnv('FIREBASE_IOS_APP_ID'),
     messagingSenderId: FlavorConfig.getEnv('FIREBASE_MESSAGING_SENDER_ID'),
     projectId: FlavorConfig.getEnv('FIREBASE_PROJECT_ID'),
     storageBucket: FlavorConfig.getEnv('FIREBASE_STORAGE_BUCKET'),

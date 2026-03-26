@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:sharexe/configs/flavor/flavor_config.dart';
+import 'package:sharexe/core/network/interceptors/auth_interceptor.dart';
 import 'package:sharexe/core/services/alice_service.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
@@ -11,7 +12,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 @module
 abstract class NetworkModule {
   @lazySingleton
-  Dio dio(AliceService aliceService) {
+  Dio dio(AliceService aliceService, AuthInterceptor authInterceptor) {
     final dio = Dio(
       BaseOptions(
         baseUrl: FlavorConfig.apiBaseUrl,
@@ -34,6 +35,8 @@ abstract class NetworkModule {
         return client;
       },
     );
+
+    dio.interceptors.add(authInterceptor);
 
     if (FlavorConfig.debugMode) {
       dio.interceptors.add(

@@ -52,5 +52,9 @@
 		</array>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSLocationWhenInUseUsageDescription</key>
+    <string>ShareXe cần truy cập vị trí của bạn để tìm tài xế gần nhất và theo dõi chuyến đi.</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+    <string>ShareXe cần truy cập vị trí của bạn ngay cả khi chạy ngầm để cập nhật lộ trình cuốc xe.</string>
 	</dict>
 </plist>

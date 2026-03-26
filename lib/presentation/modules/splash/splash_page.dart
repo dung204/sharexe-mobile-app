@@ -21,8 +21,7 @@ class SplashPage extends StatelessWidget {
         listener: (context, state) {
           state.whenOrNull(
             firstRun: () => context.go(AppRoutes.onboarding),
-            authenticated: () => context.go(AppRoutes.auth),
-            unauthenticated: () => context.go(AppRoutes.auth),
+            completed: () => context.go(AppRoutes.home),
           );
         },
         child: Scaffold(
