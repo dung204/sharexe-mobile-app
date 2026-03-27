@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:sharexe/core/result/result.dart';
 import 'package:sharexe/domain/usecases/hubs/search_hubs_usecase.dart';
 import 'package:sharexe/presentation/modules/search/cubit/search_state.dart';
 import 'dart:async';
@@ -24,16 +25,16 @@ class SearchCubit extends Cubit<SearchState> {
       emit(const SearchState.loading());
       final result = await _searchHubsUseCase(keyword: keyword);
 
-      result.when(
-        success: (hubs) {
+      result.fold(
+        (failure) {
+          emit(SearchState.error(failure.message ?? 'Unknown error occurred'));
+        },
+        (hubs) {
           if (hubs.isEmpty) {
             emit(const SearchState.empty());
           } else {
             emit(SearchState.loaded(hubs));
           }
-        },
-        failure: (failure) {
-          emit(SearchState.error(failure.message ?? 'Unknown error occurred'));
         },
       );
     });
