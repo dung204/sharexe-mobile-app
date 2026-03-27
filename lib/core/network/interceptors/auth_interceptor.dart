@@ -4,24 +4,19 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class AuthInterceptor extends Interceptor {
-  AuthInterceptor() {
-    FirebaseAuth.instance.idTokenChanges().listen((User? user) async {
-      if (user != null) {
-        _cachedToken = await user.getIdToken();
-      } else {
-        _cachedToken = null;
-      }
-    });
-  }
-
-  String? _cachedToken;
-
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  Future<void> onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     final requiresToken = options.extra['requiresToken'] ?? true;
 
-    if (requiresToken && _cachedToken != null) {
-      options.headers['Authorization'] = 'Bearer $_cachedToken';
+    if (requiresToken) {
+      final token = await FirebaseAuth.instance.currentUser?.getIdToken();
+
+      if (token != null) {
+        options.headers['Authorization'] = 'Bearer $token';
+      }
     }
 
     super.onRequest(options, handler);

@@ -10,7 +10,7 @@ class SplashCubit extends Cubit<SplashState> {
   final AppPreferences _appPreferences;
 
   Future<void> init() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 3));
 
     if (_appPreferences.isFirstRun) {
       emit(const SplashState.firstRun());

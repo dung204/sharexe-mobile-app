@@ -143,12 +143,19 @@ class $AssetsImagesGen {
   /// File path: assets/images/cml.png
   AssetGenImage get cml => const AssetGenImage('assets/images/cml.png');
 
+  /// File path: assets/images/drawer_header.png
+  AssetGenImage get drawerHeader =>
+      const AssetGenImage('assets/images/drawer_header.png');
+
   /// File path: assets/images/flag_vn.png
   AssetGenImage get flagVn => const AssetGenImage('assets/images/flag_vn.png');
 
   /// File path: assets/images/google_logo.png
   AssetGenImage get googleLogo =>
       const AssetGenImage('assets/images/google_logo.png');
+
+  /// File path: assets/images/map_pin.svg
+  SvgGenImage get mapPin => const SvgGenImage('assets/images/map_pin.svg');
 
   /// File path: assets/images/onboarding1.png
   AssetGenImage get onboarding1 =>
@@ -162,17 +169,24 @@ class $AssetsImagesGen {
   AssetGenImage get onboarding3 =>
       const AssetGenImage('assets/images/onboarding3.png');
 
+  /// File path: assets/images/start_hub.png
+  AssetGenImage get startHub =>
+      const AssetGenImage('assets/images/start_hub.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [
+  List<dynamic> get values => [
     appLogo,
     appLogoWithShadow,
     citySilhouette,
     cml,
+    drawerHeader,
     flagVn,
     googleLogo,
+    mapPin,
     onboarding1,
     onboarding2,
     onboarding3,
+    startHub,
   ];
 }
 

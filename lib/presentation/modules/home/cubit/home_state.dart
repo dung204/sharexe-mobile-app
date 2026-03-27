@@ -17,5 +17,6 @@ class HomeState with _$HomeState {
     HubEntity? startHub,
     HubEntity? endHub,
     RouteEntity? currentRoute,
+    HubEntity? selectedHub,
   }) = _Ready;
 }

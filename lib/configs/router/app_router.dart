@@ -8,6 +8,7 @@ import 'package:sharexe/presentation/modules/auth/cubit/auth_state.dart';
 import 'package:sharexe/presentation/modules/home/cubit/home_cubit.dart';
 import 'package:sharexe/presentation/modules/home/home_page.dart';
 import 'package:sharexe/presentation/modules/onboarding/onboarding_page.dart';
+import 'package:sharexe/presentation/modules/search/search_page.dart';
 import 'package:sharexe/presentation/modules/splash/splash_page.dart';
 import 'package:sharexe/presentation/shared/global_error_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class AppRoutes {
   static const String onboarding = '/onboarding';
   static const String auth = '/auth';
   static const String home = '/home';
+  static const String search = '/search';
 }
 
 class AppRouter {
@@ -78,6 +80,16 @@ class AppRouter {
         builder: (context, state) => BlocProvider(
           create: (context) => getIt<HomeCubit>()..initMapData(),
           child: const HomePage(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.search,
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const SearchPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
         ),
       ),
     ],

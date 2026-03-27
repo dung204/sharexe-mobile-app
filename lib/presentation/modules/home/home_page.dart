@@ -3,9 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sharexe/domain/entities/hub_entity.dart';
-import 'package:sharexe/domain/entities/route_entity.dart';
 import 'package:sharexe/presentation/modules/home/cubit/home_cubit.dart';
 import 'package:sharexe/presentation/modules/home/cubit/home_state.dart';
+import 'package:sharexe/presentation/modules/home/widgets/home_search_bar.dart';
+import 'package:sharexe/presentation/shared/map/hub_info_panel.dart';
+import 'package:sharexe/presentation/shared/map/sharexe_map.dart';
+import 'package:sharexe/presentation/shared/map/sharexe_map_scaffold.dart';
+import 'package:sharexe/presentation/shared/user_avatar.dart';
+import 'package:sharexe/presentation/shared/user_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,8 +19,13 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final MapController _mapController = MapController();
+  final LatLng _defaultLocation = const LatLng(21.028511, 105.804817);
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  HubEntity? _lastViewedHub;
 
   @override
   void dispose() {
@@ -25,248 +35,154 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<HomeCubit, HomeState>(
-        listenWhen: (previous, current) {
-          final prevReady = previous.mapOrNull(ready: (s) => s);
-          final currReady = current.mapOrNull(ready: (s) => s);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-          if (prevReady != null && currReady != null) {
-            return prevReady.currentLocation != currReady.currentLocation;
-          }
+    return BlocConsumer<HomeCubit, HomeState>(
+      listenWhen: (previous, current) {
+        return previous.maybeWhen(loading: () => true, orElse: () => false) &&
+            current.maybeWhen(
+              ready: (_, _, _, _, _, _) => true,
+              orElse: () => false,
+            );
+      },
+      listener: (context, state) {
+        state.mapOrNull(
+          ready: (readyState) {
+            _animatedMapMove(readyState.currentLocation, 15.0);
+          },
+        );
+      },
+      builder: (context, state) {
+        bool isLoading = false;
+        LatLng? mapLocation;
+        List<HubEntity> mapHubs = [];
+        HubEntity? selectedHub;
 
-          return false;
-        },
-        listener: (context, state) {
-          state.mapOrNull(
-            ready: (readyState) {
-              _mapController.move(readyState.currentLocation, 15.0);
-            },
-          );
-        },
-        builder: (context, state) {
-          return state.maybeWhen(
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (msg) => Center(child: Text('Lỗi: $msg')),
-            ready: (currentLoc, hubs, startHub, endHub, route) {
-              return _buildMapAndOverlay(
-                context,
-                currentLoc,
-                hubs,
-                startHub,
-                endHub,
-                route,
-              );
-            },
-            orElse: () => const SizedBox.shrink(),
-          );
-        },
-      ),
-    );
-  }
+        state.map(
+          initial: (_) => isLoading = true,
+          loading: (_) => isLoading = true,
+          error: (_) => mapLocation = _defaultLocation,
+          ready: (readyState) {
+            mapLocation = readyState.currentLocation;
+            mapHubs = readyState.hubs;
+            selectedHub = readyState.selectedHub;
+          },
+        );
 
-  Widget _buildMapAndOverlay(
-    BuildContext context,
-    LatLng currentLocation,
-    List<HubEntity> hubs,
-    HubEntity? startHub,
-    HubEntity? endHub,
-    RouteEntity? route,
-  ) {
-    return Stack(
-      children: [
-        // Background Map
-        FlutterMap(
-          mapController: _mapController,
-          options: MapOptions(
-            initialCenter: currentLocation,
-            initialZoom: 14.0,
-          ),
-          children: [
-            TileLayer(
-              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-              userAgentPackageName: 'com.sharexe.app',
+        if (selectedHub != null) {
+          _lastViewedHub = selectedHub;
+        }
+
+        return Scaffold(
+          key: _scaffoldKey,
+          drawer: const UserDrawer(),
+          body: ShareXeMapScaffold(
+            isLoading: isLoading,
+
+            mapLayer: ShareXeMap(
+              mapController: _mapController,
+              currentLocation: mapLocation ?? _defaultLocation,
+              isFakeLocation: mapLocation == null,
+              hubs: mapHubs,
+              onHubTapped: (hub) {
+                _animatedMapMove(hub.latLng, 15.0);
+                context.read<HomeCubit>().selectHub(hub);
+              },
             ),
 
-            if (route != null)
-              PolylineLayer(
-                polylines: [
-                  Polyline(
-                    points: route.points,
-                    strokeWidth: 5.0,
-                    color: Colors.blue,
-                  ),
-                ],
-              ),
-
-            MarkerLayer(
-              markers: [
-                Marker(
-                  point: currentLocation,
-                  width: 40,
-                  height: 40,
-                  child: const Icon(
-                    Icons.my_location,
-                    color: Colors.blue, // In a real app use AppColors
-                    size: 40,
-                  ),
+            topOverlay: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                UserAvatar(
+                  onTap: () {
+                    _scaffoldKey.currentState?.openDrawer();
+                  },
+                  borderWidth: 2.0,
+                  borderColor: colorScheme.primary,
+                  hasShadow: true,
                 ),
+                const SizedBox(width: 12),
 
-                ...hubs.map((hub) {
-                  final isStart = hub.id == startHub?.id;
-                  final isEnd = hub.id == endHub?.id;
-                  return Marker(
-                    point: hub.latLng,
-                    width: 50,
-                    height: 50,
-                    child: GestureDetector(
-                      onTap: () {
-                        // TODO: call Cubit to assign start/end Hub
-                      },
-                      child: Icon(
-                        Icons.location_on,
-                        size: 40,
-                        color: isStart
-                            ? Colors.green
-                            : (isEnd ? Colors.red : Colors.orange),
-                      ),
-                    ),
-                  );
-                }),
+                const Expanded(child: HomeSearchBar()),
               ],
             ),
-          ],
-        ),
 
-        Positioned(
-          bottom: 180,
-          right: 16,
-          child: FloatingActionButton(
-            heroTag: 'my_location_btn',
-            backgroundColor: Theme.of(context).cardColor,
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+            floatingButtons: FloatingActionButton(
+              backgroundColor: colorScheme.surface,
+              elevation: 4,
+              shape: const CircleBorder(),
+              enableFeedback: true,
+              onPressed: () {
+                final currentState = context.read<HomeCubit>().state;
+                currentState.mapOrNull(
+                  ready: (readyState) =>
+                      _animatedMapMove(readyState.currentLocation, 15.0),
+                );
+              },
+              child: Icon(Icons.my_location, color: colorScheme.onSurface),
             ),
-            onPressed: () {
-              context.read<HomeCubit>().refetchCurrentLocation();
+
+            isPanelVisible: selectedHub != null,
+            onPanelClosed: () {
+              // Khi user tự lấy tay vuốt panel xuống đáy -> Xoá hub đã chọn
+              context.read<HomeCubit>().clearSelectedHub();
             },
-            child: Icon(
-              Icons.my_location,
-              color: Theme.of(context).primaryColor,
-            ),
+            panelBuilder: (scrollController) {
+              if (_lastViewedHub == null) return const SizedBox.shrink();
+
+              return HubInfoPanel(
+                hub: selectedHub!,
+                scrollController: scrollController, // Truyền controller vào
+                onClose: () {
+                  context.read<HomeCubit>().clearSelectedHub();
+                },
+              );
+            },
           ),
-        ),
-
-        // UI Overlays
-        SafeArea(
-          child: Column(
-            children: [
-              // Hamburger / Head Actions
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 8.0,
-                ),
-                child: Row(
-                  children: [
-                    FloatingActionButton.small(
-                      heroTag: 'menu_btn',
-                      backgroundColor: Theme.of(context).cardColor,
-                      onPressed: () {
-                        // Open drawer
-                      },
-                      child: const Icon(Icons.menu),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // "Where to?" Floating Card
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 10,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).hoverColor,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Row(
-                          children: [
-                            Icon(Icons.search),
-                            SizedBox(width: 8),
-                            Text(
-                              'Where to?',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      // Saved Places List
-                      _buildSavedPlaceRow(context, Icons.home, 'Home'),
-                      const Divider(),
-                      _buildSavedPlaceRow(context, Icons.work, 'Work'),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 
-  Widget _buildSavedPlaceRow(
-    BuildContext context,
-    IconData icon,
-    String title,
-  ) {
-    return InkWell(
-      onTap: () {},
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
-              child: Icon(icon, color: Theme.of(context).primaryColor),
-            ),
-            const SizedBox(width: 16),
-            Text(
-              title,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-      ),
+  void _animatedMapMove(LatLng destLocation, double destZoom) {
+    final latTween = Tween<double>(
+      begin: _mapController.camera.center.latitude,
+      end: destLocation.latitude,
     );
+    final lngTween = Tween<double>(
+      begin: _mapController.camera.center.longitude,
+      end: destLocation.longitude,
+    );
+    final zoomTween = Tween<double>(
+      begin: _mapController.camera.zoom,
+      end: destZoom,
+    );
+
+    final controller = AnimationController(
+      duration: const Duration(milliseconds: 700),
+      vsync: this,
+    );
+
+    final Animation<double> animation = CurvedAnimation(
+      parent: controller,
+      curve: Curves.fastOutSlowIn,
+    );
+
+    controller.addListener(() {
+      _mapController.move(
+        LatLng(latTween.evaluate(animation), lngTween.evaluate(animation)),
+        zoomTween.evaluate(animation),
+      );
+    });
+
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed ||
+          status == AnimationStatus.dismissed) {
+        controller.dispose();
+      }
+    });
+
+    controller.forward();
   }
 }

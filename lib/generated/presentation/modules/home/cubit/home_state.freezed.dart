@@ -128,13 +128,13 @@ return ready(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( String message)?  error,TResult Function( LatLng currentLocation,  List<HubEntity> hubs,  HubEntity? startHub,  HubEntity? endHub,  RouteEntity? currentRoute)?  ready,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( String message)?  error,TResult Function( LatLng currentLocation,  List<HubEntity> hubs,  HubEntity? startHub,  HubEntity? endHub,  RouteEntity? currentRoute,  HubEntity? selectedHub)?  ready,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Error() when error != null:
 return error(_that.message);case _Ready() when ready != null:
-return ready(_that.currentLocation,_that.hubs,_that.startHub,_that.endHub,_that.currentRoute);case _:
+return ready(_that.currentLocation,_that.hubs,_that.startHub,_that.endHub,_that.currentRoute,_that.selectedHub);case _:
   return orElse();
 
 }
@@ -152,13 +152,13 @@ return ready(_that.currentLocation,_that.hubs,_that.startHub,_that.endHub,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( String message)  error,required TResult Function( LatLng currentLocation,  List<HubEntity> hubs,  HubEntity? startHub,  HubEntity? endHub,  RouteEntity? currentRoute)  ready,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( String message)  error,required TResult Function( LatLng currentLocation,  List<HubEntity> hubs,  HubEntity? startHub,  HubEntity? endHub,  RouteEntity? currentRoute,  HubEntity? selectedHub)  ready,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
 return loading();case _Error():
 return error(_that.message);case _Ready():
-return ready(_that.currentLocation,_that.hubs,_that.startHub,_that.endHub,_that.currentRoute);case _:
+return ready(_that.currentLocation,_that.hubs,_that.startHub,_that.endHub,_that.currentRoute,_that.selectedHub);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -175,13 +175,13 @@ return ready(_that.currentLocation,_that.hubs,_that.startHub,_that.endHub,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( String message)?  error,TResult? Function( LatLng currentLocation,  List<HubEntity> hubs,  HubEntity? startHub,  HubEntity? endHub,  RouteEntity? currentRoute)?  ready,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( String message)?  error,TResult? Function( LatLng currentLocation,  List<HubEntity> hubs,  HubEntity? startHub,  HubEntity? endHub,  RouteEntity? currentRoute,  HubEntity? selectedHub)?  ready,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Error() when error != null:
 return error(_that.message);case _Ready() when ready != null:
-return ready(_that.currentLocation,_that.hubs,_that.startHub,_that.endHub,_that.currentRoute);case _:
+return ready(_that.currentLocation,_that.hubs,_that.startHub,_that.endHub,_that.currentRoute,_that.selectedHub);case _:
   return null;
 
 }
@@ -323,7 +323,7 @@ as String,
 
 
 class _Ready implements HomeState {
-  const _Ready({required this.currentLocation, final  List<HubEntity> hubs = const [], this.startHub, this.endHub, this.currentRoute}): _hubs = hubs;
+  const _Ready({required this.currentLocation, final  List<HubEntity> hubs = const [], this.startHub, this.endHub, this.currentRoute, this.selectedHub}): _hubs = hubs;
   
 
  final  LatLng currentLocation;
@@ -337,6 +337,7 @@ class _Ready implements HomeState {
  final  HubEntity? startHub;
  final  HubEntity? endHub;
  final  RouteEntity? currentRoute;
+ final  HubEntity? selectedHub;
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
@@ -348,16 +349,16 @@ _$ReadyCopyWith<_Ready> get copyWith => __$ReadyCopyWithImpl<_Ready>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Ready&&(identical(other.currentLocation, currentLocation) || other.currentLocation == currentLocation)&&const DeepCollectionEquality().equals(other._hubs, _hubs)&&(identical(other.startHub, startHub) || other.startHub == startHub)&&(identical(other.endHub, endHub) || other.endHub == endHub)&&(identical(other.currentRoute, currentRoute) || other.currentRoute == currentRoute));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Ready&&(identical(other.currentLocation, currentLocation) || other.currentLocation == currentLocation)&&const DeepCollectionEquality().equals(other._hubs, _hubs)&&(identical(other.startHub, startHub) || other.startHub == startHub)&&(identical(other.endHub, endHub) || other.endHub == endHub)&&(identical(other.currentRoute, currentRoute) || other.currentRoute == currentRoute)&&(identical(other.selectedHub, selectedHub) || other.selectedHub == selectedHub));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentLocation,const DeepCollectionEquality().hash(_hubs),startHub,endHub,currentRoute);
+int get hashCode => Object.hash(runtimeType,currentLocation,const DeepCollectionEquality().hash(_hubs),startHub,endHub,currentRoute,selectedHub);
 
 @override
 String toString() {
-  return 'HomeState.ready(currentLocation: $currentLocation, hubs: $hubs, startHub: $startHub, endHub: $endHub, currentRoute: $currentRoute)';
+  return 'HomeState.ready(currentLocation: $currentLocation, hubs: $hubs, startHub: $startHub, endHub: $endHub, currentRoute: $currentRoute, selectedHub: $selectedHub)';
 }
 
 
@@ -368,11 +369,11 @@ abstract mixin class _$ReadyCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
   factory _$ReadyCopyWith(_Ready value, $Res Function(_Ready) _then) = __$ReadyCopyWithImpl;
 @useResult
 $Res call({
- LatLng currentLocation, List<HubEntity> hubs, HubEntity? startHub, HubEntity? endHub, RouteEntity? currentRoute
+ LatLng currentLocation, List<HubEntity> hubs, HubEntity? startHub, HubEntity? endHub, RouteEntity? currentRoute, HubEntity? selectedHub
 });
 
 
-$HubEntityCopyWith<$Res>? get startHub;$HubEntityCopyWith<$Res>? get endHub;
+$HubEntityCopyWith<$Res>? get startHub;$HubEntityCopyWith<$Res>? get endHub;$HubEntityCopyWith<$Res>? get selectedHub;
 
 }
 /// @nodoc
@@ -385,14 +386,15 @@ class __$ReadyCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? currentLocation = null,Object? hubs = null,Object? startHub = freezed,Object? endHub = freezed,Object? currentRoute = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? currentLocation = null,Object? hubs = null,Object? startHub = freezed,Object? endHub = freezed,Object? currentRoute = freezed,Object? selectedHub = freezed,}) {
   return _then(_Ready(
 currentLocation: null == currentLocation ? _self.currentLocation : currentLocation // ignore: cast_nullable_to_non_nullable
 as LatLng,hubs: null == hubs ? _self._hubs : hubs // ignore: cast_nullable_to_non_nullable
 as List<HubEntity>,startHub: freezed == startHub ? _self.startHub : startHub // ignore: cast_nullable_to_non_nullable
 as HubEntity?,endHub: freezed == endHub ? _self.endHub : endHub // ignore: cast_nullable_to_non_nullable
 as HubEntity?,currentRoute: freezed == currentRoute ? _self.currentRoute : currentRoute // ignore: cast_nullable_to_non_nullable
-as RouteEntity?,
+as RouteEntity?,selectedHub: freezed == selectedHub ? _self.selectedHub : selectedHub // ignore: cast_nullable_to_non_nullable
+as HubEntity?,
   ));
 }
 
@@ -419,6 +421,18 @@ $HubEntityCopyWith<$Res>? get endHub {
 
   return $HubEntityCopyWith<$Res>(_self.endHub!, (value) {
     return _then(_self.copyWith(endHub: value));
+  });
+}/// Create a copy of HomeState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$HubEntityCopyWith<$Res>? get selectedHub {
+    if (_self.selectedHub == null) {
+    return null;
+  }
+
+  return $HubEntityCopyWith<$Res>(_self.selectedHub!, (value) {
+    return _then(_self.copyWith(selectedHub: value));
   });
 }
 }

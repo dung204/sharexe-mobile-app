@@ -1,6 +1,7 @@
-import 'package:sharexe/core/result/result.dart';
-import 'package:sharexe/domain/entities/user_location_entity.dart';
+import 'package:sharexe/domain/entities/location_entity.dart';
 
 abstract class LocationRepository {
-  Future<Result<UserLocationEntity>> getCurrentLocation();
+  Stream<LocationEntity> trackLocation();
+  Future<LocationEntity?> getLastKnownLocation();
+  Future<bool> requestPermission();
 }

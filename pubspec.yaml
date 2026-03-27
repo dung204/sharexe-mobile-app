@@ -75,6 +75,7 @@ dependencies:
   flutter_map: ^8.2.2
   latlong2: ^0.9.1
   equatable: ^2.0.8
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
