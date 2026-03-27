@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HubEntity {
 
- String get id; DateTime get createdAt; String get name; String get address; double get latitude; double get longitude; bool get isActive; String? get description; String? get imageUrl; String? get createdBy; DateTime? get lastModifiedAt; String? get lastModifiedBy; DateTime? get deletedAt;
+ String get id; String get name; String get address; double get latitude; double get longitude; String? get description; String? get imageUrl;
 /// Create a copy of HubEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $HubEntityCopyWith<HubEntity> get copyWith => _$HubEntityCopyWithImpl<HubEntity>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HubEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.lastModifiedAt, lastModifiedAt) || other.lastModifiedAt == lastModifiedAt)&&(identical(other.lastModifiedBy, lastModifiedBy) || other.lastModifiedBy == lastModifiedBy)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HubEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,createdAt,name,address,latitude,longitude,isActive,description,imageUrl,createdBy,lastModifiedAt,lastModifiedBy,deletedAt);
+int get hashCode => Object.hash(runtimeType,id,name,address,latitude,longitude,description,imageUrl);
 
 @override
 String toString() {
-  return 'HubEntity(id: $id, createdAt: $createdAt, name: $name, address: $address, latitude: $latitude, longitude: $longitude, isActive: $isActive, description: $description, imageUrl: $imageUrl, createdBy: $createdBy, lastModifiedAt: $lastModifiedAt, lastModifiedBy: $lastModifiedBy, deletedAt: $deletedAt)';
+  return 'HubEntity(id: $id, name: $name, address: $address, latitude: $latitude, longitude: $longitude, description: $description, imageUrl: $imageUrl)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $HubEntityCopyWith<$Res>  {
   factory $HubEntityCopyWith(HubEntity value, $Res Function(HubEntity) _then) = _$HubEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, DateTime createdAt, String name, String address, double latitude, double longitude, bool isActive, String? description, String? imageUrl, String? createdBy, DateTime? lastModifiedAt, String? lastModifiedBy, DateTime? deletedAt
+ String id, String name, String address, double latitude, double longitude, String? description, String? imageUrl
 });
 
 
@@ -62,22 +62,16 @@ class _$HubEntityCopyWithImpl<$Res>
 
 /// Create a copy of HubEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? createdAt = null,Object? name = null,Object? address = null,Object? latitude = null,Object? longitude = null,Object? isActive = null,Object? description = freezed,Object? imageUrl = freezed,Object? createdBy = freezed,Object? lastModifiedAt = freezed,Object? lastModifiedBy = freezed,Object? deletedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? address = null,Object? latitude = null,Object? longitude = null,Object? description = freezed,Object? imageUrl = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,latitude: null == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
 as double,longitude: null == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
-as double,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
-as bool,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as double,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String?,createdBy: freezed == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
-as String?,lastModifiedAt: freezed == lastModifiedAt ? _self.lastModifiedAt : lastModifiedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,lastModifiedBy: freezed == lastModifiedBy ? _self.lastModifiedBy : lastModifiedBy // ignore: cast_nullable_to_non_nullable
-as String?,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as String?,
   ));
 }
 
@@ -162,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime createdAt,  String name,  String address,  double latitude,  double longitude,  bool isActive,  String? description,  String? imageUrl,  String? createdBy,  DateTime? lastModifiedAt,  String? lastModifiedBy,  DateTime? deletedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String address,  double latitude,  double longitude,  String? description,  String? imageUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HubEntity() when $default != null:
-return $default(_that.id,_that.createdAt,_that.name,_that.address,_that.latitude,_that.longitude,_that.isActive,_that.description,_that.imageUrl,_that.createdBy,_that.lastModifiedAt,_that.lastModifiedBy,_that.deletedAt);case _:
+return $default(_that.id,_that.name,_that.address,_that.latitude,_that.longitude,_that.description,_that.imageUrl);case _:
   return orElse();
 
 }
@@ -183,10 +177,10 @@ return $default(_that.id,_that.createdAt,_that.name,_that.address,_that.latitude
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime createdAt,  String name,  String address,  double latitude,  double longitude,  bool isActive,  String? description,  String? imageUrl,  String? createdBy,  DateTime? lastModifiedAt,  String? lastModifiedBy,  DateTime? deletedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String address,  double latitude,  double longitude,  String? description,  String? imageUrl)  $default,) {final _that = this;
 switch (_that) {
 case _HubEntity():
-return $default(_that.id,_that.createdAt,_that.name,_that.address,_that.latitude,_that.longitude,_that.isActive,_that.description,_that.imageUrl,_that.createdBy,_that.lastModifiedAt,_that.lastModifiedBy,_that.deletedAt);case _:
+return $default(_that.id,_that.name,_that.address,_that.latitude,_that.longitude,_that.description,_that.imageUrl);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +197,10 @@ return $default(_that.id,_that.createdAt,_that.name,_that.address,_that.latitude
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime createdAt,  String name,  String address,  double latitude,  double longitude,  bool isActive,  String? description,  String? imageUrl,  String? createdBy,  DateTime? lastModifiedAt,  String? lastModifiedBy,  DateTime? deletedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String address,  double latitude,  double longitude,  String? description,  String? imageUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _HubEntity() when $default != null:
-return $default(_that.id,_that.createdAt,_that.name,_that.address,_that.latitude,_that.longitude,_that.isActive,_that.description,_that.imageUrl,_that.createdBy,_that.lastModifiedAt,_that.lastModifiedBy,_that.deletedAt);case _:
+return $default(_that.id,_that.name,_that.address,_that.latitude,_that.longitude,_that.description,_that.imageUrl);case _:
   return null;
 
 }
@@ -218,22 +212,16 @@ return $default(_that.id,_that.createdAt,_that.name,_that.address,_that.latitude
 
 
 class _HubEntity extends HubEntity {
-  const _HubEntity({required this.id, required this.createdAt, required this.name, required this.address, required this.latitude, required this.longitude, required this.isActive, this.description, this.imageUrl, this.createdBy, this.lastModifiedAt, this.lastModifiedBy, this.deletedAt}): super._();
+  const _HubEntity({required this.id, required this.name, required this.address, required this.latitude, required this.longitude, this.description, this.imageUrl}): super._();
   
 
 @override final  String id;
-@override final  DateTime createdAt;
 @override final  String name;
 @override final  String address;
 @override final  double latitude;
 @override final  double longitude;
-@override final  bool isActive;
 @override final  String? description;
 @override final  String? imageUrl;
-@override final  String? createdBy;
-@override final  DateTime? lastModifiedAt;
-@override final  String? lastModifiedBy;
-@override final  DateTime? deletedAt;
 
 /// Create a copy of HubEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -245,16 +233,16 @@ _$HubEntityCopyWith<_HubEntity> get copyWith => __$HubEntityCopyWithImpl<_HubEnt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HubEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.lastModifiedAt, lastModifiedAt) || other.lastModifiedAt == lastModifiedAt)&&(identical(other.lastModifiedBy, lastModifiedBy) || other.lastModifiedBy == lastModifiedBy)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HubEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,createdAt,name,address,latitude,longitude,isActive,description,imageUrl,createdBy,lastModifiedAt,lastModifiedBy,deletedAt);
+int get hashCode => Object.hash(runtimeType,id,name,address,latitude,longitude,description,imageUrl);
 
 @override
 String toString() {
-  return 'HubEntity(id: $id, createdAt: $createdAt, name: $name, address: $address, latitude: $latitude, longitude: $longitude, isActive: $isActive, description: $description, imageUrl: $imageUrl, createdBy: $createdBy, lastModifiedAt: $lastModifiedAt, lastModifiedBy: $lastModifiedBy, deletedAt: $deletedAt)';
+  return 'HubEntity(id: $id, name: $name, address: $address, latitude: $latitude, longitude: $longitude, description: $description, imageUrl: $imageUrl)';
 }
 
 
@@ -265,7 +253,7 @@ abstract mixin class _$HubEntityCopyWith<$Res> implements $HubEntityCopyWith<$Re
   factory _$HubEntityCopyWith(_HubEntity value, $Res Function(_HubEntity) _then) = __$HubEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, DateTime createdAt, String name, String address, double latitude, double longitude, bool isActive, String? description, String? imageUrl, String? createdBy, DateTime? lastModifiedAt, String? lastModifiedBy, DateTime? deletedAt
+ String id, String name, String address, double latitude, double longitude, String? description, String? imageUrl
 });
 
 
@@ -282,22 +270,16 @@ class __$HubEntityCopyWithImpl<$Res>
 
 /// Create a copy of HubEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? createdAt = null,Object? name = null,Object? address = null,Object? latitude = null,Object? longitude = null,Object? isActive = null,Object? description = freezed,Object? imageUrl = freezed,Object? createdBy = freezed,Object? lastModifiedAt = freezed,Object? lastModifiedBy = freezed,Object? deletedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? address = null,Object? latitude = null,Object? longitude = null,Object? description = freezed,Object? imageUrl = freezed,}) {
   return _then(_HubEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,latitude: null == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
 as double,longitude: null == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
-as double,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
-as bool,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as double,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String?,createdBy: freezed == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
-as String?,lastModifiedAt: freezed == lastModifiedAt ? _self.lastModifiedAt : lastModifiedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,lastModifiedBy: freezed == lastModifiedBy ? _self.lastModifiedBy : lastModifiedBy // ignore: cast_nullable_to_non_nullable
-as String?,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as String?,
   ));
 }
 

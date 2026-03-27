@@ -38,18 +38,12 @@ class HubModel extends BaseModel {
   HubEntity toEntity() {
     return HubEntity(
       id: id,
-      createdAt: createdAt,
       name: name,
       address: address,
       latitude: latitude,
       longitude: longitude,
-      isActive: isActive,
       description: description,
       imageUrl: imageUrl,
-      createdBy: createdBy,
-      deletedAt: deletedAt,
-      lastModifiedAt: lastModifiedAt,
-      lastModifiedBy: lastModifiedBy,
     );
   }
 }
