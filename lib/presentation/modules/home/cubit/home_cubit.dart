@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:sharexe/core/result/result.dart';
 import 'package:sharexe/domain/entities/hub_entity.dart';
 import 'package:sharexe/domain/entities/location_entity.dart';
+import 'package:sharexe/domain/usecases/hubs/get_nearby_hubs_usecase.dart';
 import 'package:sharexe/domain/usecases/location/get_last_known_location_usecase.dart';
 import 'package:sharexe/domain/usecases/location/request_location_permission_usecase.dart';
 import 'package:sharexe/domain/usecases/location/track_location_usecase.dart';
@@ -16,11 +18,13 @@ class HomeCubit extends Cubit<HomeState> {
     this._trackLocationUseCase,
     this._getLastKnownLocationUseCase,
     this._requestLocationPermissionUseCase,
+    this._getNearbyHubsUseCase,
   ) : super(const HomeState.initial());
 
   final RequestLocationPermissionUseCase _requestLocationPermissionUseCase;
   final GetLastKnownLocationUseCase _getLastKnownLocationUseCase;
   final TrackLocationUseCase _trackLocationUseCase;
+  final GetNearbyHubsUseCase _getNearbyHubsUseCase;
 
   final LatLng _defaultLocation = const LatLng(21.028511, 105.804817); // Hanoi
 
@@ -51,25 +55,20 @@ class HomeCubit extends Cubit<HomeState> {
         ? LatLng(lastKnownLoc.latitude, lastKnownLoc.longitude)
         : _defaultLocation;
 
+    final result = await _getNearbyHubsUseCase.call(
+      latitude: initialLoc.latitude,
+      longitude: initialLoc.longitude,
+    );
+
+    List<HubEntity> nearbyHubs = [];
+    if (result.isSuccess) {
+      nearbyHubs = result.value;
+    }
+
     emit(
       HomeState.ready(
         currentLocation: initialLoc,
-        hubs: [
-          HubEntity(
-            id: 'hub1',
-            name: 'Hub 1',
-            address: 'Address 1',
-            latitude: initialLoc.latitude + 0.01,
-            longitude: initialLoc.longitude + 0.01,
-          ),
-          HubEntity(
-            id: 'hub2',
-            name: 'Hub 2',
-            address: 'Address 2',
-            latitude: initialLoc.latitude - 0.01,
-            longitude: initialLoc.longitude - 0.01,
-          ),
-        ], // TODO: Load hubs from API
+        hubs: nearbyHubs,
         startHub: null,
         endHub: null,
         currentRoute: null,

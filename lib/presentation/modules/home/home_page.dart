@@ -40,15 +40,33 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     return BlocConsumer<HomeCubit, HomeState>(
       listenWhen: (previous, current) {
-        return previous.maybeWhen(loading: () => true, orElse: () => false) &&
+        final isInitialLoad =
+            previous.maybeWhen(loading: () => true, orElse: () => false) &&
             current.maybeWhen(
               ready: (_, _, _, _, _, _) => true,
               orElse: () => false,
             );
+
+        final isHubSelectionChanged = previous.maybeMap(
+          ready: (prevReady) => current.maybeMap(
+            ready: (currReady) =>
+                prevReady.selectedHub != currReady.selectedHub &&
+                currReady.selectedHub != null,
+            orElse: () => false,
+          ),
+          orElse: () => false,
+        );
+
+        return isInitialLoad || isHubSelectionChanged;
       },
       listener: (context, state) {
         state.mapOrNull(
           ready: (readyState) {
+            if (readyState.selectedHub != null) {
+              _animatedMapMove(readyState.selectedHub!.latLng, 15.0);
+              return;
+            }
+
             _animatedMapMove(readyState.currentLocation, 15.0);
           },
         );
@@ -86,7 +104,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               isFakeLocation: mapLocation == null,
               hubs: mapHubs,
               onHubTapped: (hub) {
-                _animatedMapMove(hub.latLng, 15.0);
                 context.read<HomeCubit>().selectHub(hub);
               },
             ),

@@ -26,6 +26,8 @@ import 'package:sharexe/core/services/connectivity_service.dart' as _i697;
 import 'package:sharexe/core/services/language_service.dart' as _i365;
 import 'package:sharexe/core/services/theme_service.dart' as _i323;
 import 'package:sharexe/data/datasources/local/app_preferences.dart' as _i618;
+import 'package:sharexe/data/datasources/local/hubs_local_data_source.dart'
+    as _i122;
 import 'package:sharexe/data/datasources/local/local_data_source.dart' as _i792;
 import 'package:sharexe/data/datasources/local/location_service.dart' as _i943;
 import 'package:sharexe/data/datasources/local/users_local_data_source.dart'
@@ -58,6 +60,8 @@ import 'package:sharexe/domain/usecases/auth/sign_in_with_google_usecase.dart'
 import 'package:sharexe/domain/usecases/auth/sign_out_usecase.dart' as _i595;
 import 'package:sharexe/domain/usecases/auth/sign_up_with_email_and_password_usecase.dart'
     as _i520;
+import 'package:sharexe/domain/usecases/hubs/get_nearby_hubs_usecase.dart'
+    as _i1041;
 import 'package:sharexe/domain/usecases/hubs/search_hubs_usecase.dart' as _i783;
 import 'package:sharexe/domain/usecases/location/get_last_known_location_usecase.dart'
     as _i256;
@@ -157,14 +161,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i261.UsersLocalDataSource>(),
       ),
     );
-    gh.factory<_i1043.HubsRepository>(
-      () => _i428.HubsRepositoryImpl(gh<_i291.HubsRemoteDataSource>()),
-    );
     gh.factory<_i864.RouteRepository>(
       () => _i106.RouteRepositoryImpl(gh<_i160.RouteRemoteDataSource>()),
     );
-    gh.factory<_i783.SearchHubsUseCase>(
-      () => _i783.SearchHubsUseCase(gh<_i1043.HubsRepository>()),
+    gh.factory<_i122.HubsLocalDataSource>(
+      () => _i122.HubsLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
     gh.factory<_i503.SignInWithEmailAndPasswordUseCase>(
       () =>
@@ -189,11 +190,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i256.GetLastKnownLocationUseCase>(
       () => _i256.GetLastKnownLocationUseCase(gh<_i705.LocationRepository>()),
     );
-    gh.factory<_i485.SearchCubit>(
-      () => _i485.SearchCubit(gh<_i783.SearchHubsUseCase>()),
-    );
     gh.factory<_i244.UsersRepository>(
       () => _i595.UsersRepositoryImpl(gh<_i336.UsersRemoteDataSource>()),
+    );
+    gh.factory<_i1043.HubsRepository>(
+      () => _i428.HubsRepositoryImpl(
+        gh<_i291.HubsRemoteDataSource>(),
+        gh<_i122.HubsLocalDataSource>(),
+      ),
     );
     gh.factory<_i818.TrackLocationUseCase>(
       () => _i818.TrackLocationUseCase(gh<_i705.LocationRepository>()),
@@ -215,11 +219,21 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i595.SignOutUseCase>(),
       ),
     );
+    gh.factory<_i783.SearchHubsUseCase>(
+      () => _i783.SearchHubsUseCase(gh<_i1043.HubsRepository>()),
+    );
+    gh.factory<_i1041.GetNearbyHubsUseCase>(
+      () => _i1041.GetNearbyHubsUseCase(gh<_i1043.HubsRepository>()),
+    );
+    gh.factory<_i485.SearchCubit>(
+      () => _i485.SearchCubit(gh<_i783.SearchHubsUseCase>()),
+    );
     gh.factory<_i684.HomeCubit>(
       () => _i684.HomeCubit(
         gh<_i818.TrackLocationUseCase>(),
         gh<_i256.GetLastKnownLocationUseCase>(),
         gh<_i591.RequestLocationPermissionUseCase>(),
+        gh<_i1041.GetNearbyHubsUseCase>(),
       ),
     );
     return this;

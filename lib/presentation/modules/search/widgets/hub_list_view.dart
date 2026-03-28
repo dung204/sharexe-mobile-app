@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sharexe/generated/assets/assets.gen.dart';
 import 'package:sharexe/presentation/modules/search/cubit/search_cubit.dart';
 import 'package:sharexe/presentation/modules/search/cubit/search_state.dart';
@@ -26,7 +27,7 @@ class HubListView extends StatelessWidget {
                 title: Text(hub.name),
                 subtitle: Text(hub.address),
                 onTap: () {
-                  // TODO: Handle returning selected hub back to the map
+                  context.pop(hub);
                 },
               );
             },

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sharexe/domain/entities/hub_entity.dart';
+import 'package:sharexe/presentation/modules/home/cubit/home_cubit.dart';
 
 class HomeSearchBar extends StatelessWidget {
   const HomeSearchBar({super.key});
@@ -17,8 +20,14 @@ class HomeSearchBar extends StatelessWidget {
           color: Theme.of(context).cardColor,
           child: InkWell(
             borderRadius: BorderRadius.circular(30),
-            onTap: () {
-              context.push('/search');
+            onTap: () async {
+              final selectedHubFromSearch = await context.push<HubEntity?>(
+                '/search',
+              );
+
+              if (selectedHubFromSearch != null && context.mounted) {
+                context.read<HomeCubit>().selectHub(selectedHubFromSearch);
+              }
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
